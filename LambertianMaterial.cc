@@ -53,11 +53,13 @@ void LambertianMaterial::shade(Color& result, const RenderContext& context,
 		Light*const* end = &lights[0]+lights.size();
 		Color recursive_result(0.0, 0.0, 0.0);
 		
+		const double atten_factor = 0.6;
+		
 		while(begin != end){
 			
 			Color light_color;
 			Vector light_direction;
-			Vector reflection_direction;
+
 			// distance from light source to hitpos
 			double dist = (*begin++)->getLight(light_color, light_direction, context, hitpos);  
 			
@@ -76,19 +78,21 @@ void LambertianMaterial::shade(Color& result, const RenderContext& context,
 					light += light_color*(Kd*cosphi);
 					
 					// specular term Is = Ls * Ks * cos^alpha (phi)				
-					reflection_direction = 2 * Dot(light_direction, normal) * normal - light_direction;
-					Is += light_color * Ks * pow( max(Dot(reflection_direction, -ray.direction()), 0.0), alpha);
-				}
+					Vector reflection_light_direction = 2 * Dot(light_direction, normal) * normal - light_direction;
+					Is += light_color * Ks * pow( max(Dot(reflection_light_direction, -ray.direction()), 0.0), alpha);
+				}	
 			
-				Ray reflection_ray(hitpos, reflection_direction);
+				// recursive part
+				Vector reflection_ray_direction = 2 * Dot(-ray.direction(), normal) * normal + ray.direction();
+				Ray reflection_ray(hitpos, reflection_ray_direction);
 				HitRecord reflection_hit(DBL_MAX);
-				scene->getObject()->intersect(reflection_hit, context, reflection_ray);
+				world->intersect(reflection_hit, context, reflection_ray);
 	
 				if (reflection_hit.getPrimitive()) {
-					shade(recursive_result, context, reflection_ray, reflection_hit, atten * 0.75, depth + 1);
+					shade(recursive_result, context, reflection_ray, reflection_hit, atten * atten_factor, depth + 1);
 				}
 			}
 		} // end of while(begin != end)
-		result = light * color + Is + recursive_result * 0.75;
+		result = (light ) * color + Is + recursive_result * atten_factor;
 	}
 }

@@ -19,6 +19,9 @@ class Primitive : public Object {
 
   virtual void computeUVW(Vector& uvw, const RenderContext& context,
                           const Ray& ray, const HitRecord& hit) const;
+	virtual void getName() const{
+		std::cout << "primitive" << std::endl;
+	}
 
  protected:
   Material* matl;

@@ -216,7 +216,7 @@
 						<key>_historyCapacity</key>
 						<integer>0</integer>
 						<key>bookmark</key>
-						<string>1B6005F814397F4700E984A4</string>
+						<string>1B6006011439839A00E984A4</string>
 						<key>history</key>
 						<array>
 							<string>1B13CEE61439676D009AB67B</string>
@@ -256,7 +256,7 @@
 						<key>_historyCapacity</key>
 						<integer>0</integer>
 						<key>bookmark</key>
-						<string>1B6005F914397F4700E984A4</string>
+						<string>1B6006021439839A00E984A4</string>
 						<key>history</key>
 						<array>
 							<string>1B13CEE71439676D009AB67B</string>
@@ -416,7 +416,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>1B6005EF14397F4700E984A4</string>
+										<string>1B6006001439839A00E984A4</string>
 										<key>history</key>
 										<array>
 											<string>1B2883991439261000FA91EA</string>
@@ -627,8 +627,6 @@
 			<key>Layout</key>
 			<array>
 				<dict>
-					<key>BecomeActive</key>
-					<true/>
 					<key>ContentConfiguration</key>
 					<dict>
 						<key>PBXProjectModuleGUID</key>
@@ -784,7 +782,6 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>1B6005FA14397F4700E984A4</string>
 		<string>1B6005FB14397F4700E984A4</string>
 		<string>1B6005FC14397F4700E984A4</string>
 		<string>1B13CE3014395AD9009AB67B</string>

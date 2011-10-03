@@ -36,6 +36,7 @@ void Group::intersect(HitRecord& hit, const RenderContext& context, const Ray& r
 {
   Object*const* begin = &objects[0];
   Object*const* end = &objects[0]+objects.size();
+	// test for each object in group
   while (begin != end)
     (*begin++)->intersect(hit, context, ray);
 }

@@ -2,6 +2,8 @@
 #ifndef Object_h
 #define Object_h
 
+#include <iostream>
+
 class BoundingBox;
 class Color;
 class HitRecord;
@@ -16,7 +18,7 @@ class Object {
   virtual void preprocess();
   virtual void getBounds(BoundingBox& bbox) const = 0;
   virtual void intersect(HitRecord& hit, const RenderContext& context, const Ray& ray) const = 0;
-
+	virtual void getName() const = 0;
  private:
   Object(const Object&);
   Object& operator=(const Object&);
