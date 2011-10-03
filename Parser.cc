@@ -423,6 +423,8 @@ Material *Parser::parseLambertianMaterial()
   Color color( 1.0, 1.0, 1.0 );
   double Kd = 0.6;
   double Ka = 0.3;
+	double Ks = 0.5;
+	double alpha = 100;
   if ( peek( Token::left_brace ) )
     for ( ; ; )
     {
@@ -432,12 +434,16 @@ Material *Parser::parseLambertianMaterial()
         Kd = parseReal();
       else if ( peek( "Ka" ) )
         Ka = parseReal();
+			else if ( peek( "Ks" ) )
+				Ks = parseReal();
+			else if ( peek( "alpha" ) )
+				alpha = parseReal();
       else if ( peek( Token::right_brace ) )
         break;
       else
-        throwParseException( "Expected `color', `Kd', `Ka' or }." );
+        throwParseException( "Expected `color', `Kd', `Ka', `Ks', `alpha' or }." );
     }
-  return new LambertianMaterial( color, Kd, Ka );
+  return new LambertianMaterial( color, Kd, Ka, Ks, alpha );
 }
 
 Material *Parser::parseMaterial()
@@ -530,7 +536,7 @@ Parser::Parser(
   : input( input ),
     line_number( 1 ),
     column_number( 0 ),
-    default_material( new LambertianMaterial( Color( 1.0, 1.0, 1.0 ), 0.6, 0.3 ) )
+    default_material( new LambertianMaterial( Color( 1.0, 1.0, 1.0 ), 0.6, 0.3, 0.7, 100 ) )
 {
   readNextToken();
 }

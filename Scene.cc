@@ -55,38 +55,39 @@ void Scene::preprocess()
 
 void Scene::render()
 {
-  if(!object || !background || !camera || !image){
-    cerr << "Incomplete scene, cannot render!\n";
-    exit(1);
-  }
-  int xres = image->getXresolution();
-  int yres = image->getYresolution();
-	
-  RenderContext context(this);  // save a scene reference
-  
+	if(!object || !background || !camera || !image){
+		cerr << "Incomplete scene, cannot render!\n";
+		exit(1);
+	}
+	int xres = image->getXresolution();
+	int yres = image->getYresolution();
+	RenderContext context(this);
 	double dx = 2./xres;
-  double xmin = -1. + dx/2.;
-  double dy = 2./yres;
-  double ymin = -1. + dy/2.;
-  
-	Color atten(1,1,1);  // what's this??
-  
+	double xmin = -1. + dx/2.;
+	double dy = 2./yres;
+	double ymin = -1. + dy/2.;
+	Color atten(1,1,1);
 	for(int i=0;i<yres;i++){
-    //cerr << "y=" << i << '\n';
-    double y = ymin + i*dy;
-    for(int j=0;j<xres;j++){
-      double x = xmin + j*dx;
-      //cerr << "x=" << j << ", y=" << i << '\n';
-      Ray ray;
-      camera->makeRay(ray, context, x, y);   // computer ray = eye -> (x,y)
-			
-			// recursive part
-      Color result;
-			traceRay(result, context, ray, atten, 0);
-			
-      image->set(j, i, result);
-    }
-  }
+		//cerr << "y=" << i << '\n';
+		double y = ymin + i*dy;
+		for(int j=0;j<xres;j++){
+			double x = xmin + j*dx;
+			//cerr << "x=" << j << ", y=" << i << '\n';
+			Ray ray;
+			camera->makeRay(ray, context, x, y);
+			HitRecord hit(DBL_MAX);
+			object->intersect(hit, context, ray);
+			Color result;
+			if(hit.getPrimitive()){
+				// Ray hit something...
+				const Material* matl = hit.getMaterial();
+				matl->shade(result, context, ray, hit, atten, 0);
+			} else {
+				background->getBackgroundColor(result, context, ray);
+			}
+			image->set(j, i, result);
+		}
+	}
 }
 
 double Scene::traceRay(Color& result,				// current accumulate color

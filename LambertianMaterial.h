@@ -7,7 +7,7 @@
 
 class LambertianMaterial : public Material {
  public:
-  LambertianMaterial(const Color& color, float Kd, float Ka);
+  LambertianMaterial(const Color& color, float Kd, float Ka, float Ks, float alpha);
   virtual ~LambertianMaterial();
 
   virtual void shade(Color& result, const RenderContext& context, const Ray& ray,
@@ -20,6 +20,8 @@ class LambertianMaterial : public Material {
   Color color;
   float Kd;
   float Ka;
+	float Ks;
+	float alpha;
 };
 
 #endif
