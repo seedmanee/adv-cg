@@ -26,7 +26,7 @@ Scene::Scene()
 	
   minAttenuation = 0.1;
 	
-	maxRayDepth = 10;
+	maxRayDepth = 6;
 }
 
 Scene::~Scene()
@@ -90,71 +90,14 @@ void Scene::render()
 	}
 }
 
-double Scene::traceRay(Color& result,				// current accumulate color
-											 const RenderContext& context, // scene pointer
-											 const Ray& ray,
-											 const Color& atten,	// how to attenuate this term?
-											 int depth) const
-{
-  if(depth >= maxRayDepth || atten.maxComponent() < minAttenuation){
-    result = Color(0, 0, 0);
-    return 0;
-  } else {
-		
-    HitRecord hit(DBL_MAX);
-    object->intersect(hit, context, ray);	// test if ray will hit something
-		
-		Point hitpos;
-		Vector normal;
-		Color result_reflection;
-		
-		const double atten_factor = 0.7;
-		
-    if(hit.getPrimitive()){
-      // Ray hit something...
-      const Material* matl = hit.getMaterial();
-      matl->shade(result, context, ray, hit, atten, depth);  // last two terms are useless
-			
-			// add specular reflection term
-			hitpos = ray.origin() + ray.direction() * hit.minT();			
-			hit.getPrimitive()->normal(normal, context, hitpos, ray, hit);
-			
-			// make sure normal point outward we are facing
-			double costheta = Dot(normal, ray.direction());
-			if( costheta > 0)
-				normal = -normal;
-			
-			//    dot(ray_toLight, normal) = dot(normal, ray_Reflection)
-			// => ray_reflection = 2 * dot (ray_toLight, normal) * normal + ray_toLight
-			Ray ray_reflection (hitpos,
-													2 * Dot( -ray.direction(), normal) * normal + ray.direction() );
-			
-			traceRay(result_reflection, context, ray_reflection, atten * atten_factor, depth + 1);
-			
-			result += result_reflection * atten_factor; // * Dot(ray_reflection.direction(), normal);
-			
-      return hit.minT();
-    } else {
-      background->getBackgroundColor(result, context, ray);
-      return DBL_MAX;
-    }
-  }
-}
-
-// what's this for??
-double Scene::traceRay(Color& result, 
-											 const RenderContext& context, 
-											 const Object* obj,    // ???
-											 const Ray& ray, 
-											 const Color& atten, 
-											 int depth) const
+double Scene::traceRay(Color& result, const RenderContext& context, const Object* obj, const Ray& ray, const Color& atten, int depth) const
 {
   if(depth >= maxRayDepth || atten.maxComponent() < minAttenuation){
     result = Color(0, 0, 0);
     return 0;
   } else {
     HitRecord hit(DBL_MAX);
-    obj->intersect(hit, context, ray);	// only different line
+    obj->intersect(hit, context, ray);
     if(hit.getPrimitive()){
       // Ray hit something...
       const Material* matl = hit.getMaterial();
@@ -165,4 +108,24 @@ double Scene::traceRay(Color& result,
       return DBL_MAX;
     }
   }
+}
+
+double Scene::traceRay(Color& result, const RenderContext& context, const Ray& ray, const Color& atten, int depth) const
+{
+	if(depth >= maxRayDepth || atten.maxComponent() < minAttenuation){
+		result = Color(0, 0, 0);
+		return 0;
+	} else {
+		HitRecord hit(DBL_MAX);
+		object->intersect(hit, context, ray);
+		if(hit.getPrimitive()){
+				// Ray hit something...
+				const Material* matl = hit.getMaterial();
+				matl->shade(result, context, ray, hit, atten, depth);
+				return hit.minT();
+		} else {
+				background->getBackgroundColor(result, context, ray);
+				return DBL_MAX;
+		}
+	}
 }
