@@ -1,4 +1,3 @@
-// modifed
 
 #include "LambertianMaterial.h"
 #include "HitRecord.h"
@@ -31,16 +30,18 @@ void LambertianMaterial::shade(Color& result, const RenderContext& context,
   Vector normal;
   hit.getPrimitive()->normal(normal, context, hitpos, ray, hit); // normal at hitpos
   double costheta = Dot(normal, ray.direction());
-  if(costheta > 0)
+  // make sure the normal of surface you hit is facing outward
+	if(costheta > 0)
     normal = -normal;
 	
   const Object* world = scene->getObject();
 	
+	// ambient term Ia = La * Ka
   Color light = scene->getAmbient()*Ka;
 	
 	Color Is(0.0, 0.0, 0.0);
-	Color bounce(0.0, 0.0, 0.0);
-	const double atten_factor = 0.7;
+	
+	const double atten_factor = 0.8;
 	Vector reflection_ray_direction = 2 * Dot(-ray.direction(), normal) * normal + ray.direction();
 	Ray reflection_ray(hitpos, reflection_ray_direction);
 
@@ -62,9 +63,12 @@ void LambertianMaterial::shade(Color& result, const RenderContext& context,
 			if(!shadowhit.getPrimitive())
 			{
 				// No shadows...
+				// diffuse term Id = Ld * Kd * cos(theta)
 				light += light_color*(Kd*cosphi);
 				
 				Vector reflection_light_direction = 2 * Dot(light_direction, normal) * normal - light_direction;
+
+				// specular term Is = Ls * Ks * cos^alpha (phi)
 				Is += light_color * Ks * pow( max(Dot(reflection_light_direction, -ray.direction()), 0.0), alpha);
 			}
 		}
@@ -73,7 +77,12 @@ void LambertianMaterial::shade(Color& result, const RenderContext& context,
 	// add recursive part
 	Color reflection_result;
 	context.getScene()->traceRay(reflection_result, context, reflection_ray, atten * atten_factor, depth + 1);
-	result = light*color + Is + reflection_result * atten_factor;
+	
+	result = (light ) *color + Is 
+		+ reflection_result * atten_factor * Kd * Dot(normal, reflection_ray_direction) 
+		+ reflection_result * atten_factor * Ks * pow( max(Dot(reflection_ray_direction, -ray.direction()), 0.0), alpha)
+	;
+
 }
 
 /*

@@ -26,7 +26,7 @@ Scene::Scene()
 	
   minAttenuation = 0.1;
 	
-	maxRayDepth = 6;
+	maxRayDepth = 10;
 }
 
 Scene::~Scene()
