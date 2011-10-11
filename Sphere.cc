@@ -41,7 +41,6 @@ void Sphere::intersect(HitRecord& hit, const RenderContext&, const Ray& ray) con
       double root2 = (-b + sdisc);
       hit.hit(root2, this, matl);
     }
-		
   }
 }
 

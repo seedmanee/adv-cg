@@ -78,10 +78,10 @@ void LambertianMaterial::shade(Color& result, const RenderContext& context,
 	Color reflection_result;
 	context.getScene()->traceRay(reflection_result, context, reflection_ray, atten * atten_factor, depth + 1);
 	
-	result = (light ) *color + Is 
-		+ reflection_result * atten_factor * Kd * Dot(normal, reflection_ray_direction) 
-		+ reflection_result * atten_factor * Ks * pow( max(Dot(reflection_ray_direction, -ray.direction()), 0.0), alpha)
-	;
+	Color reflection_diffuse = reflection_result * atten_factor * Kd * Dot(normal, reflection_ray_direction) ;
+	Color reflection_specular = reflection_result * atten_factor * Ks * pow( max(Dot(reflection_ray_direction, -ray.direction()), 0.0), alpha);
+	
+	result = (light + reflection_diffuse) *color + Is + reflection_specular;
 
 }
 
