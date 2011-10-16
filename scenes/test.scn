@@ -78,7 +78,8 @@ scene group {
 		center [ 25.0, 25.0, 120.0 ]
 		radius 10.0
 	}
-	   plane {
+
+  plane {
     material lambertian {
       color [ 0.4, 0.4, 0.7 ]
       Kd 0.4
