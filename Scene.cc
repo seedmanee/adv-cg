@@ -28,7 +28,7 @@ Scene::Scene()
 	
 	maxRayDepth = 10;
 	
-	DRT_number = 10;
+	DRT_number = 4;
 }
 
 Scene::~Scene()
@@ -70,6 +70,12 @@ void Scene::render()
 	double ymin = -1. + dy/2.;
 	Color atten(1,1,1);
 	
+	double move_x[4] = {
+		0.0, 1.0, 0.0, 1.0
+	};
+	double move_y[4] = {
+		0.0, 0.0, 1.0, 1.0
+	};
 	for(int i=0;i<yres;i++){
 		double y = ymin + i*dy;
 		for(int j=0;j<xres;j++){
@@ -80,8 +86,12 @@ void Scene::render()
 			for(int t=0; t<DRT_number; t++){
 				double r = sqrt(drand48());
 				double theta = 2 * M_PI * drand48();
-				double xp = x + dx * r * cos(theta);
-				double yp = y + dy * r * sin(theta);
+				//double xp = x + dx * r * cos(theta);
+				//double yp = y + dy * r * sin(theta);
+				
+				double xp = x + dx * move_x[t];
+				double yp = y + dy * move_y[t];
+				
 				camera->makeRay(ray, context, xp, yp);
 				HitRecord hit(DBL_MAX);
 				object->intersect(hit, context, ray);
