@@ -22,6 +22,8 @@ class LambertianMaterial : public Material {
   float Ka;
 	float Ks;
 	float alpha;
+	
+	const int DRT_number;
 };
 
 #endif
