@@ -92,6 +92,8 @@ class Scene {
   std::vector<Light*> lights;
   int maxRayDepth;				// maximum ray tracing recursive depth
   double minAttenuation;	// 最小衰減??
+	
+	int DRT_number;					// distributed ray tracing spwan number
 
 };
 

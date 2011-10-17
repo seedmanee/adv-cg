@@ -27,6 +27,8 @@ Scene::Scene()
   minAttenuation = 0.1;
 	
 	maxRayDepth = 10;
+	
+	DRT_number = 10;
 }
 
 Scene::~Scene()
@@ -67,25 +69,34 @@ void Scene::render()
 	double dy = 2./yres;
 	double ymin = -1. + dy/2.;
 	Color atten(1,1,1);
+	
 	for(int i=0;i<yres;i++){
-		//cerr << "y=" << i << '\n';
 		double y = ymin + i*dy;
 		for(int j=0;j<xres;j++){
 			double x = xmin + j*dx;
-			//cerr << "x=" << j << ", y=" << i << '\n';
 			Ray ray;
-			camera->makeRay(ray, context, x, y);
-			HitRecord hit(DBL_MAX);
-			object->intersect(hit, context, ray);
-			Color result;
-			if(hit.getPrimitive()){
-				// Ray hit something...
-				const Material* matl = hit.getMaterial();
-				matl->shade(result, context, ray, hit, atten, 0);
-			} else {
-				background->getBackgroundColor(result, context, ray);
+			Color result_sum(0.0, 0.0, 0.0);
+			
+			for(int t=0; t<DRT_number; t++){
+				double r = sqrt(drand48());
+				double theta = 2 * M_PI * drand48();
+				double xp = x + dx * r * cos(theta);
+				double yp = y + dy * r * sin(theta);
+				camera->makeRay(ray, context, xp, yp);
+				HitRecord hit(DBL_MAX);
+				object->intersect(hit, context, ray);
+				Color result;
+				if(hit.getPrimitive()){
+					// Ray hit something...
+					const Material* matl = hit.getMaterial();
+					matl->shade(result, context, ray, hit, atten, 0);
+				} else {
+					background->getBackgroundColor(result, context, ray);
+				}
+				result_sum += result;
 			}
-			image->set(j, i, result);
+			
+			image->set(j, i, result_sum/(double)DRT_number);
 		}
 	}
 }
