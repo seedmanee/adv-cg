@@ -28,7 +28,7 @@ Scene::Scene()
 	
 	maxRayDepth = 10;
 	
-	DRT_number = 4;
+	DRT_number = 2;
 }
 
 Scene::~Scene()
@@ -71,10 +71,10 @@ void Scene::render()
 	Color atten(1,1,1);
 	
 	double move_x[4] = {
-		0.0, 1.0, 0.0, 1.0
+		1.0, -1.0, 1.0, -1.0
 	};
 	double move_y[4] = {
-		0.0, 0.0, 1.0, 1.0
+		1.0, 1.0, -1.0, -1.0
 	};
 	for(int i=0;i<yres;i++){
 		double y = ymin + i*dy;
@@ -82,15 +82,17 @@ void Scene::render()
 			double x = xmin + j*dx;
 			Ray ray;
 			Color result_sum(0.0, 0.0, 0.0);
-			
+			/*
+			for (int superx=0; superx < DRT_number; superx++) {
+				for (int supery=0; supery < DRT_number; supery++) {
+					
+				}
+			}
+			 */
 			for(int t=0; t<DRT_number; t++){
-				double r = sqrt(drand48());
-				double theta = 2 * M_PI * drand48();
-				//double xp = x + dx * r * cos(theta);
-				//double yp = y + dy * r * sin(theta);
 				
-				double xp = x + dx * move_x[t];
-				double yp = y + dy * move_y[t];
+				double xp = x + dx * 0.5 * drand48() * move_x[t];
+				double yp = y + dy * 0.5 * drand48() * move_y[t];
 				
 				camera->makeRay(ray, context, xp, yp);
 				HitRecord hit(DBL_MAX);
