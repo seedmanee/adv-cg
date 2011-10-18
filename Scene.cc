@@ -28,7 +28,7 @@ Scene::Scene()
 	
 	maxRayDepth = 10;
 	
-	DRT_number = 2;
+	SSAA = 2;  // super sampling anti aliasing
 }
 
 Scene::~Scene()
@@ -70,45 +70,40 @@ void Scene::render()
 	double ymin = -1. + dy/2.;
 	Color atten(1,1,1);
 	
-	double move_x[4] = {
-		1.0, -1.0, 1.0, -1.0
-	};
-	double move_y[4] = {
-		1.0, 1.0, -1.0, -1.0
-	};
+	double ddx = dx / (double)SSAA;  // super sampling grid step
+	double ddy = dy / (double)SSAA;
+	
 	for(int i=0;i<yres;i++){
 		double y = ymin + i*dy;
+		
 		for(int j=0;j<xres;j++){
 			double x = xmin + j*dx;
+			
 			Ray ray;
 			Color result_sum(0.0, 0.0, 0.0);
-			/*
-			for (int superx=0; superx < DRT_number; superx++) {
-				for (int supery=0; supery < DRT_number; supery++) {
+
+			for (int superx = 0; superx < SSAA; superx++) {
+				for (int supery = 0; supery < SSAA; supery++) {
+
+					double xp = x + (superx - SSAA/2) * ddx + ddx * drand48();
+					double yp = y + (supery - SSAA/2) * ddy + ddy * drand48();
 					
-				}
-			}
-			 */
-			for(int t=0; t<DRT_number; t++){
-				
-				double xp = x + dx * 0.5 * drand48() * move_x[t];
-				double yp = y + dy * 0.5 * drand48() * move_y[t];
-				
-				camera->makeRay(ray, context, xp, yp);
-				HitRecord hit(DBL_MAX);
-				object->intersect(hit, context, ray);
-				Color result;
-				if(hit.getPrimitive()){
-					// Ray hit something...
-					const Material* matl = hit.getMaterial();
-					matl->shade(result, context, ray, hit, atten, 0);
-				} else {
-					background->getBackgroundColor(result, context, ray);
-				}
-				result_sum += result;
+					camera->makeRay(ray, context, xp, yp);
+					HitRecord hit(DBL_MAX);
+					object->intersect(hit, context, ray);
+					Color result;
+					if(hit.getPrimitive()){
+						// Ray hit something...
+						const Material* matl = hit.getMaterial();
+						matl->shade(result, context, ray, hit, atten, 0);
+					} else {
+						background->getBackgroundColor(result, context, ray);
+					}
+					result_sum += result/(double)(SSAA*SSAA);	
+				}	
 			}
 			
-			image->set(j, i, result_sum/(double)DRT_number);
+			image->set(j, i, result_sum);
 		}
 	}
 }

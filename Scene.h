@@ -93,7 +93,7 @@ class Scene {
   int maxRayDepth;				// maximum ray tracing recursive depth
   double minAttenuation;	// 最小衰減??
 	
-	int DRT_number;					// distributed ray tracing spwan number
+	int SSAA;					// super sampling anti aliasing number per axis
 
 };
 
