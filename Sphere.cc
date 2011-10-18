@@ -7,8 +7,8 @@
 #include "Vector.h"
 #include <math.h>
 
-Sphere::Sphere(Material* material, const Point& center, double radius)
-  : Primitive(material), center(center), radius(radius)
+Sphere::Sphere(Material* material, const Point& center, double radius, const Vector& velocity)
+  : Primitive(material), center(center), radius(radius), velocity(velocity)
 {
   inv_radius = 1./radius;
 }

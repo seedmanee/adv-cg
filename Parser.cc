@@ -495,6 +495,7 @@ Object *Parser::parseSphereObject()
 {
   Material *material = default_material;
   Point center( 0.0, 0.0, 0.0 );
+	Vector velocity( 0.0, 0.0, 0.0);
   double radius = 0.5;
   if ( peek( Token::left_brace ) )
     for ( ; ; )
@@ -505,12 +506,14 @@ Object *Parser::parseSphereObject()
         center = parsePoint();
       else if ( peek( "radius" ) )
         radius = parseReal();
+			else if ( peek( "velocity" ) )
+				velocity = parseVector();
       else if ( peek( Token::right_brace ) )
         break;
       else
         throwParseException( "Expected `material', `center', `radius' or }." );
     }
-  return new Sphere( material, center, radius );
+  return new Sphere( material, center, radius, velocity );
 }
 
 Object *Parser::parseObject()

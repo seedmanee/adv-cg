@@ -52,6 +52,8 @@ scene group {
     }
     center [ -0.5, -1.5, 2.0 ]
     radius 1.8
+		
+		velocity [1.0, 1.0, 1.0]
   }
 
   // yellow sphere
@@ -65,6 +67,7 @@ scene group {
    }
     center [ 0.5, 1.0, 1.0 ]
     radius 1.0
+		velocity [0.5, 0.5, 0.5]
   }
 
 	 sphere {
@@ -77,6 +80,7 @@ scene group {
 		}
 		center [ 25.0, 25.0, 120.0 ]
 		radius 10.0
+		velocity [1.4, -0.2, 0]
 	}
 
   plane {
