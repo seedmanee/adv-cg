@@ -28,7 +28,7 @@ Scene::Scene()
 	
 	maxRayDepth = 10;
 	
-	SSAA = 2;  // super sampling anti aliasing
+	SSAA = 1;  // super sampling anti aliasing
 }
 
 Scene::~Scene()
@@ -94,7 +94,7 @@ void Scene::render()
 					Color result_dof(0.0, 0.0, 0.0);
 					for (int r=0; r<DOF_ray; r++) {
 
-						camera->makeRay(ray, context, xp, yp, r);
+						camera->makeRay(ray, context, xp, yp);
 						HitRecord hit(DBL_MAX);
 						object->intersect(hit, context, ray);
 						Color result;

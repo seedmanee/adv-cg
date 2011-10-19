@@ -12,7 +12,7 @@ class PinholeCamera : public Camera {
   virtual ~PinholeCamera();
   
   virtual void preprocess(double aspect_ratio);
-  virtual void makeRay(Ray& ray, const RenderContext& context, double x, double y, int) const;
+  virtual void makeRay(Ray& ray, const RenderContext& context, double x, double y) const;
 
  private:
   PinholeCamera(const PinholeCamera&);

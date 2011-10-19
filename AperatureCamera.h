@@ -11,7 +11,7 @@ class AperatureCamera : public PinholeCamera {
 public:
   AperatureCamera(const Point& eye, const Point& lookat, const Vector& up, double hfov, double lensRadius, double focalDistance);
   virtual ~AperatureCamera();
-  virtual void makeRay(Ray& ray, const RenderContext& context, double x, double y, int n_ray) const;
+  virtual void makeRay(Ray& ray, const RenderContext& context, double x, double y) const;
 	
 private:
   AperatureCamera(const AperatureCamera&);

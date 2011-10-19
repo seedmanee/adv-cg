@@ -15,39 +15,34 @@ AperatureCamera::~AperatureCamera()
 {
 }
 
-
-void AperatureCamera::makeRay(Ray& ray, const RenderContext& context, double x, double y, int n_ray) const
-{	
-  Vector direction = lookdir+u*x+v*y;
+void AperatureCamera::makeRay(Ray& ray, const RenderContext& context, double x, double y) const
+{
+	double r = sqrt(drand48());
+	double theta = 2 * M_PI * drand48();
+	
+	double lensU = lensRadius * r * cos(theta);
+	double lensV = lensRadius * r * sin(theta);
+	
+	Vector direction = lookdir + u * x + v * y;
+  Vector refraction_direction = lookdir + u * (lensU + x) + v * (lensV + y);
+	Point pointOnLens = eye + refraction_direction;
+	
 	direction.normalize();
+	refraction_direction.normalize();
 	
-//	Point new_origin;
-//	Vector new_direction;
-	double imageDistance = 16;
+	Vector straight = lookdir * Dot(direction, lookat);
 	
-	if (n_ray != 0) {
-		double r = sqrt(drand48());
-		double theta = 2 * M_PI * drand48();
-		
-		double lensU = lensRadius * r * cos(theta);
-		double lensV = lensRadius * r * sin(theta);
-		
-		// Compute point on plane of focus
-		// image plane to lens distance
-		// project plane to lens distance
-		double projectDistance = imageDistance*focalDistance / (imageDistance - focalDistance);
-		double ft = (projectDistance+imageDistance) / direction.length();
-		Point Pfocus = ray.origin() + ray.direction() * ft;
-		
-		// Update ray for effect of lens
-		Point new_origin = ray.origin()+direction + u * lensU + v * lensV;
-		Vector new_direction = Pfocus - new_origin;
-		new_direction.normalize();
-		
-		ray = Ray(new_origin, new_direction);
-		
-	} else {
-		ray = Ray(eye, direction);
-	}
+	double imageDistance = 10.0;
 
+	double projectDistance = imageDistance * focalDistance / (imageDistance - focalDistance);
+	double ft = (projectDistance + imageDistance) / straight.length();
+
+	Point Pfocus = eye + direction * ft;
+	
+	// Update ray for effect of lens
+	Vector new_direction = Pfocus - pointOnLens;
+	new_direction.normalize();
+	
+	ray = Ray(pointOnLens, new_direction);
+	
 }
