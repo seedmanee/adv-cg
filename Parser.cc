@@ -1,6 +1,7 @@
 
 #include "Parser.h"
 #include "PinholeCamera.h"
+#include "AperatureCamera.h"
 #include "ConstantBackground.h"
 #include "PointLight.h"
 #include "LambertianMaterial.h"
@@ -359,10 +360,44 @@ Camera *Parser::parsePinholeCamera()
   return new PinholeCamera( eye, lookat, up, hfov );
 }
 
+Camera *Parser::parseAperatureCamera()
+{
+  Point eye( 0.0, 0.0, 0.0 );
+  Point lookat( 0.0, 1.0, 0.0 );
+  Vector up( 0.0, 0.0, 1.0 );
+  double hfov = 90.0;
+	double focal_distance = 2.5;
+	double lens_radius = 0.0;
+  if ( peek( Token::left_brace ) )
+    for ( ; ; )
+    {
+      if ( peek( "eye" ) )
+        eye = parsePoint();
+      else if ( peek( "lookat" ) )
+        lookat = parsePoint();
+      else if ( peek( "up" ) )
+        up = parseVector();
+      else if ( peek( "hfov" ) )
+        hfov = parseReal();
+      else if ( peek( Token::right_brace ) )
+        break;
+			else if ( peek( "lensRadius"))
+				lens_radius = parseReal();
+			else if ( peek("focalDistance"))
+				focal_distance = parseReal();
+      else
+        throwParseException( "Expected `eye', `lookat', `up', `hfov' or }." );
+    }
+  return new AperatureCamera( eye, lookat, up, hfov, lens_radius, focal_distance);
+}
+
 Camera *Parser::parseCamera()
 {
     if ( peek( "pinhole" ) )
         return parsePinholeCamera();
+	  else if( peek( "aperature" )){
+			return parseAperatureCamera();
+		}
     throwParseException( "Expected a camera type." );
     return 0;
 }

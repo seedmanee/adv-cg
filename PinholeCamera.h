@@ -12,12 +12,13 @@ class PinholeCamera : public Camera {
   virtual ~PinholeCamera();
   
   virtual void preprocess(double aspect_ratio);
-  virtual void makeRay(Ray& ray, const RenderContext& context, double x, double y) const;
+  virtual void makeRay(Ray& ray, const RenderContext& context, double x, double y, int) const;
 
  private:
   PinholeCamera(const PinholeCamera&);
   PinholeCamera& operator=(const PinholeCamera&);
-
+	
+ protected:
   Point eye;
   Point lookat;
   Vector up;

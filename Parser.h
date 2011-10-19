@@ -65,6 +65,7 @@ class Parser {
   Color const parseColor();
 
   Camera *parsePinholeCamera();
+	Camera *parseAperatureCamera();
   Camera *parseCamera();
 
   Background *parseConstantBackground();

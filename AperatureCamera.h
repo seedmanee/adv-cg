@@ -5,27 +5,20 @@
 #include "Camera.h"
 #include "Point.h"
 #include "Vector.h"
+#include "PinholeCamera.h"
 
 class AperatureCamera : public PinholeCamera {
 public:
-  AperatureCamera(const Point& eye, const Point& lookat, const Vector& up, double hfov);
+  AperatureCamera(const Point& eye, const Point& lookat, const Vector& up, double hfov, double lensRadius, double focalDistance);
   virtual ~AperatureCamera();
-  
-  virtual void preprocess(double aspect_ratio);
-  virtual void makeRay(Ray& ray, const RenderContext& context, double x, double y) const;
+  virtual void makeRay(Ray& ray, const RenderContext& context, double x, double y, int n_ray) const;
 	
 private:
-  AperatureCamera(const PinholeCamera&);
-  AperatureCamera& operator=(const PinholeCamera&);
+  AperatureCamera(const AperatureCamera&);
+  AperatureCamera& operator=(const AperatureCamera&);
 	
-  Point eye;
-  Point lookat;
-  Vector up;
-  double hfov;
-	
-  Vector u;
-  Vector v;
-  Vector lookdir;
+	double lensRadius;
+	double focalDistance;
 };
 
 #endif

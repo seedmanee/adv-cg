@@ -4,11 +4,13 @@ xres 512
 yres 512
 filename "image.ppm"
 
-camera pinhole {
+camera aperature {
   eye [ -24.0, -2.0, 5.2 ]
   lookat [ 1.0, 1.0, 2.4 ]
   up [ 0.0, 0.0, 1.0 ]
   hfov 22.0
+	lensRadius 64.0
+	focalDistance 5.0
 }
 
 background constant {

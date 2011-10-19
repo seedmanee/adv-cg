@@ -13,7 +13,7 @@
 using namespace std;
 
 LambertianMaterial::LambertianMaterial(const Color& color, float Kd, float Ka, float Ks, float alpha)
-  :color(color), Kd(Kd), Ka(Ka), Ks(Ks), alpha(alpha), DRT_number(10)
+  :color(color), Kd(Kd), Ka(Ka), Ks(Ks), alpha(alpha), DRT_number(1)
 {
 }
 

@@ -73,6 +73,8 @@ void Scene::render()
 	double ddx = dx / (double)SSAA;  // super sampling grid step
 	double ddy = dy / (double)SSAA;
 	
+	int DOF_ray = 8;
+	
 	for(int i=0;i<yres;i++){
 		double y = ymin + i*dy;
 		
@@ -85,21 +87,30 @@ void Scene::render()
 			for (int superx = 0; superx < SSAA; superx++) {
 				for (int supery = 0; supery < SSAA; supery++) {
 
+					// these is for anti-alaising
 					double xp = x + (superx - SSAA/2) * ddx + ddx * drand48();
 					double yp = y + (supery - SSAA/2) * ddy + ddy * drand48();
 					
-					camera->makeRay(ray, context, xp, yp);
-					HitRecord hit(DBL_MAX);
-					object->intersect(hit, context, ray);
-					Color result;
-					if(hit.getPrimitive()){
-						// Ray hit something...
-						const Material* matl = hit.getMaterial();
-						matl->shade(result, context, ray, hit, atten, 0);
-					} else {
-						background->getBackgroundColor(result, context, ray);
+					Color result_dof(0.0, 0.0, 0.0);
+					for (int r=0; r<DOF_ray; r++) {
+
+						camera->makeRay(ray, context, xp, yp, r);
+						HitRecord hit(DBL_MAX);
+						object->intersect(hit, context, ray);
+						Color result;
+						if(hit.getPrimitive()){
+							// Ray hit something...
+							const Material* matl = hit.getMaterial();
+							matl->shade(result, context, ray, hit, atten, 0);
+						} else {
+							background->getBackgroundColor(result, context, ray);
+						}
+						result_dof += result/(double)(DOF_ray);	
+				
 					}
-					result_sum += result/(double)(SSAA*SSAA);	
+					
+					result_sum += result_dof/(double)(SSAA*SSAA);	
+
 				}	
 			}
 			

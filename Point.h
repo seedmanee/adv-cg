@@ -22,6 +22,12 @@ class Point {
   explicit Point(const Vector& copy) {
     data[0] = copy.x(); data[1] = copy.y(); data[2] = copy.z();
   }
+	
+	void set(double x, double y, double z){
+		data[0] = x;
+		data[1] = y;
+		data[2] = z;
+	}
 
   Point& operator=(const Point& copy) {
     for(int i=0;i<3;i++)

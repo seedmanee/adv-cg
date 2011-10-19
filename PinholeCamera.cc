@@ -28,7 +28,7 @@ void PinholeCamera::preprocess(double aspect_ratio)
   v *= vlen;
 }
 
-void PinholeCamera::makeRay(Ray& ray, const RenderContext& context, double x, double y) const
+void PinholeCamera::makeRay(Ray& ray, const RenderContext& context, double x, double y, int) const
 {
   Vector direction = lookdir+u*x+v*y;
   direction.normalize();

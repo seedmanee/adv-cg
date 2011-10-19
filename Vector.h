@@ -32,6 +32,12 @@ class Vector {
   ~Vector() {
   }
 
+	void set(double x, double y, double z){
+		data[0] = x;
+		data[1] = y;
+		data[2] = z;
+	}
+	
   double x() const {
     return data[0];
   }

@@ -1,42 +1,53 @@
-/*
- *  AperatureCamera.cpp
- *  adv_cg_xcode
- *
- *  Created by Jui-Chung Wu on 10/18/11.
- *  Copyright 2011 __MyCompanyName__. All rights reserved.
- *
- */
 
 #include "AperatureCamera.h"
 #include "Ray.h"
 #include "Math.h"
+#include <cstdlib>
 #include <math.h>
 
-/*
-float PerspectiveCamera::GenerateRay(const CameraSample &sample, Ray *ray) const {
-    // Generate raster and camera samples
-    Point Pras(sample.imageX, sample.imageY, 0);
-    Point Pcamera;
-    RasterToCamera(Pras, &Pcamera);
-    *ray = Ray(Point(0,0,0), Normalize(Vector(Pcamera)), 0.f, INFINITY);
-    // Modify ray for depth of field
-    if (lensRadius > 0.) {
-        // Sample point on lens
-        float lensU, lensV;
-        ConcentricSampleDisk(sample.lensU, sample.lensV, &lensU, &lensV);
-        lensU *= lensRadius;
-        lensV *= lensRadius;
-
-        // Compute point on plane of focus
-        float ft = focalDistance / ray->d.z;
-        Point Pfocus = (*ray)(ft);
-
-				// Update ray for effect of lens
-				ray->o = Point(lensU, lensV, 0.f);
-				ray->d = Normalize(Pfocus - ray->o);
-		}
-		ray->time = Lerp(sample.time, shutterOpen, shutterClose);
-		CameraToWorld(*ray, ray);
-		return 1.f; 
+AperatureCamera::AperatureCamera(const Point& eye, const Point& lookat, const Vector& up,
+                             double hfov, double lensRadius, double focalDistance)
+: PinholeCamera(eye, lookat, up, hfov), lensRadius(lensRadius), focalDistance(focalDistance)
+{
 }
-*/
+
+AperatureCamera::~AperatureCamera()
+{
+}
+
+
+void AperatureCamera::makeRay(Ray& ray, const RenderContext& context, double x, double y, int n_ray) const
+{	
+  Vector direction = lookdir+u*x+v*y;
+	direction.normalize();
+	
+//	Point new_origin;
+//	Vector new_direction;
+	double imageDistance = 16;
+	
+	if (n_ray != 0) {
+		double r = sqrt(drand48());
+		double theta = 2 * M_PI * drand48();
+		
+		double lensU = lensRadius * r * cos(theta);
+		double lensV = lensRadius * r * sin(theta);
+		
+		// Compute point on plane of focus
+		// image plane to lens distance
+		// project plane to lens distance
+		double projectDistance = imageDistance*focalDistance / (imageDistance - focalDistance);
+		double ft = (projectDistance+imageDistance) / direction.length();
+		Point Pfocus = ray.origin() + ray.direction() * ft;
+		
+		// Update ray for effect of lens
+		Point new_origin = ray.origin()+direction + u * lensU + v * lensV;
+		Vector new_direction = Pfocus - new_origin;
+		new_direction.normalize();
+		
+		ray = Ray(new_origin, new_direction);
+		
+	} else {
+		ray = Ray(eye, direction);
+	}
+
+}
