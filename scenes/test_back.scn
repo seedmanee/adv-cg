@@ -9,8 +9,8 @@ camera aperature {
   lookat [ 1.0, 1.0, 2.4 ]
   up [ 0.0, 0.0, 1.0 ]
   hfov 22.0
-	lensRadius 4.0
-	focalDistance 5.0
+	lensRadius 10.0
+	focalDistance 4.0
 }
 
 background constant {
@@ -39,7 +39,7 @@ scene group {
 			Ks 0.7
 			alpha 200
     }
-    center [ 5.5, 3.5, 4.0 ]
+    center [ 1.5, 3.5, 4.0 ]
     radius 2.4
   }
 
@@ -67,7 +67,7 @@ scene group {
 			Ks 0.3
 			alpha 100
    }
-    center [ -5.5, 1.0, 1.0 ]
+    center [ 0.5, 1.0, 1.0 ]
     radius 1.0
 		velocity [0.5, 0.5, 0.5]
   }

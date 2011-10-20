@@ -24,18 +24,16 @@ void AperatureCamera::makeRay(Ray& ray, const RenderContext& context, double x, 
 	double lensV = lensRadius * r * sin(theta);
 	
 	Vector direction = lookdir + u * x + v * y;
-  Vector refraction_direction = lookdir + u * (lensU + x) + v * (lensV + y);
-	Point pointOnLens = eye + refraction_direction;
+	Point pointOnLens = eye + u * lensU + v * lensV;
 	
 	direction.normalize();
-	refraction_direction.normalize();
 	
 	Vector straight = lookdir * Dot(direction, lookat);
 	
-	double imageDistance = 10.0;
+	double imageDistance = 7.0;
 
 	double projectDistance = imageDistance * focalDistance / (imageDistance - focalDistance);
-	double ft = (projectDistance + imageDistance) / straight.length();
+	double ft = (projectDistance) / straight.length();
 
 	Point Pfocus = eye + direction * ft;
 	

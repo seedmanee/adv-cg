@@ -12,13 +12,14 @@ public:
   AperatureCamera(const Point& eye, const Point& lookat, const Vector& up, double hfov, double lensRadius, double focalDistance);
   virtual ~AperatureCamera();
   virtual void makeRay(Ray& ray, const RenderContext& context, double x, double y) const;
-	
+
+	double lensRadius;
+	double focalDistance;
+
 private:
   AperatureCamera(const AperatureCamera&);
   AperatureCamera& operator=(const AperatureCamera&);
 	
-	double lensRadius;
-	double focalDistance;
 };
 
 #endif

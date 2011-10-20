@@ -2,6 +2,9 @@
 #include "Scene.h"
 #include "Background.h"
 #include "Camera.h"
+
+#include "AperatureCamera.h"
+
 #include "HitRecord.h"
 #include "Image.h"
 #include "Light.h"
@@ -73,7 +76,7 @@ void Scene::render()
 	double ddx = dx / (double)SSAA;  // super sampling grid step
 	double ddy = dy / (double)SSAA;
 	
-	int DOF_ray = 8;
+	int DOF_ray = 1;
 	
 	for(int i=0;i<yres;i++){
 		double y = ymin + i*dy;

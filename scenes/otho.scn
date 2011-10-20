@@ -5,12 +5,12 @@ yres 512
 filename "image.ppm"
 
 camera aperature {
-  eye [ -24.0, -2.0, 5.2 ]
-  lookat [ 1.0, 1.0, 2.4 ]
+  eye [ 0.0, 0.0, 0.0 ]
+  lookat [ 1.0, 0.0, 0.0 ]
   up [ 0.0, 0.0, 1.0 ]
   hfov 22.0
-	lensRadius 4.0
-	focalDistance 5.0
+	lensRadius 0.0
+	focalDistance 4.4
 }
 
 background constant {
@@ -39,7 +39,7 @@ scene group {
 			Ks 0.7
 			alpha 200
     }
-    center [ 5.5, 3.5, 4.0 ]
+    center [ 2.5, 0.0, 2.4 ]
     radius 2.4
   }
 
@@ -52,7 +52,7 @@ scene group {
 			Ks 0.5
 			alpha 50
     }
-    center [ -0.5, -1.5, 2.0 ]
+    center [ 4.5, 3.0, 2.0 ]
     radius 1.8
 		
 		velocity [1.0, 1.0, 1.0]
@@ -67,23 +67,10 @@ scene group {
 			Ks 0.3
 			alpha 100
    }
-    center [ -5.5, 1.0, 1.0 ]
+    center [ 1.5, 1.0, 1.0 ]
     radius 1.0
 		velocity [0.5, 0.5, 0.5]
   }
-
-	 sphere {
-		material lambertian {
-			color 1.0
-			Kd 0.5
-			Ka 0.5
-			Ks 0.9
-			alpha 300
-		}
-		center [ 25.0, 25.0, 120.0 ]
-		radius 10.0
-		velocity [1.4, -0.2, 0]
-	}
 
   plane {
     material lambertian {
