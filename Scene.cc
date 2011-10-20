@@ -78,47 +78,51 @@ void Scene::render()
 	
 	int DOF_ray = 1;
 	
-	for(int i=0;i<yres;i++){
-		double y = ymin + i*dy;
+	double motion_time = -1.0;
+	while (motion_time < 2.0){
 		
-		for(int j=0;j<xres;j++){
-			double x = xmin + j*dx;
+		for(int i=0;i<yres;i++){
+			double y = ymin + i*dy;
 			
-			Ray ray;
-			Color result_sum(0.0, 0.0, 0.0);
-
-			for (int superx = 0; superx < SSAA; superx++) {
-				for (int supery = 0; supery < SSAA; supery++) {
-
-					// these is for anti-alaising
-					double xp = x + (superx - SSAA/2) * ddx + ddx * drand48();
-					double yp = y + (supery - SSAA/2) * ddy + ddy * drand48();
-					
-					Color result_dof(0.0, 0.0, 0.0);
-					for (int r=0; r<DOF_ray; r++) {
-
-						camera->makeRay(ray, context, xp, yp);
-						HitRecord hit(DBL_MAX);
-						object->intersect(hit, context, ray);
-						Color result;
-						if(hit.getPrimitive()){
-							// Ray hit something...
-							const Material* matl = hit.getMaterial();
-							matl->shade(result, context, ray, hit, atten, 0);
-						} else {
-							background->getBackgroundColor(result, context, ray);
-						}
-						result_dof += result/(double)(DOF_ray);	
+			for(int j=0;j<xres;j++){
+				double x = xmin + j*dx;
 				
-					}
-					
-					result_sum += result_dof/(double)(SSAA*SSAA);	
+				Ray ray;
+				Color result_sum(0.0, 0.0, 0.0);
 
-				}	
+				for (int superx = 0; superx < SSAA; superx++) {
+					for (int supery = 0; supery < SSAA; supery++) {
+
+						// these is for anti-alaising
+						double xp = x + (superx - SSAA/2) * ddx + ddx * drand48();
+						double yp = y + (supery - SSAA/2) * ddy + ddy * drand48();
+						
+						Color result_dof(0.0, 0.0, 0.0);
+						for (int r=0; r<DOF_ray; r++) {
+
+							camera->makeRay(ray, context, xp, yp);
+							HitRecord hit(DBL_MAX);
+							object->intersect(hit, context, ray);
+							Color result;
+							if(hit.getPrimitive()){
+								// Ray hit something...
+								const Material* matl = hit.getMaterial();
+								matl->shade(result, context, ray, hit, atten, 0);
+							} else {
+								background->getBackgroundColor(result, context, ray);
+							}
+							result_dof += result/(double)(DOF_ray);	
+					
+						}
+						
+						result_sum += result_dof/(double)(SSAA*SSAA);	
+
+					}	
+				}
+				
+				image->set(j, i, result_sum);
 			}
-			
-			image->set(j, i, result_sum);
-		}
+		} // end of for (x,y)
 	}
 }
 
