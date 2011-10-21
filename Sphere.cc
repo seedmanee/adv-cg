@@ -17,11 +17,12 @@ Sphere::~Sphere()
 {
 }
 
-void Sphere::getBounds(BoundingBox& bbox) const
+void Sphere::getBounds(BoundingBox& bbox, double t) const
 {
+	Point t_center = center + t * velocity;
   Vector diag(radius, radius, radius);
-  bbox.extend(center+diag);
-  bbox.extend(center-diag);
+  bbox.extend(t_center+diag);
+  bbox.extend(t_center-diag);
 }
 
 void Sphere::intersect(HitRecord& hit, const RenderContext&, const Ray& ray, double t) const
@@ -46,7 +47,8 @@ void Sphere::intersect(HitRecord& hit, const RenderContext&, const Ray& ray, dou
 }
 
 void Sphere::normal(Vector& normal, const RenderContext&, const Point& hitpos,
-                    const Ray& ray, const HitRecord& hit) const
+                    const Ray& ray, const HitRecord& hit, double t) const
 {
-  normal = (hitpos-center)*inv_radius;
+	Point t_center = center + t * velocity;
+  normal = (hitpos-t_center)*inv_radius;
 }

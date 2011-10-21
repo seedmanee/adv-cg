@@ -11,10 +11,10 @@ class Sphere : public Primitive {
   Sphere(Material* material, const Point& center, double radius, const Vector &velocity);
   virtual ~Sphere();
 
-  virtual void getBounds(BoundingBox& bbox) const;
+  virtual void getBounds(BoundingBox& bbox, double t) const;
   virtual void intersect(HitRecord& hit, const RenderContext& context, const Ray& ray, double t) const;
   virtual void normal(Vector& normal, const RenderContext& context,
-                      const Point& hitpos, const Ray& ray, const HitRecord& hit) const;
+                      const Point& hitpos, const Ray& ray, const HitRecord& hit, double t) const;
 	virtual void getName()const {
 		std::cout << "sphere" << std::endl;
 	}

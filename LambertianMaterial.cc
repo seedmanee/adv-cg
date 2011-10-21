@@ -28,7 +28,7 @@ void LambertianMaterial::shade(Color& result, const RenderContext& context,
   const vector<Light*>& lights = scene->getLights();
   Point hitpos = ray.origin()+ray.direction()*hit.minT(); // ray hit object at point hitpos
   Vector normal;
-  hit.getPrimitive()->normal(normal, context, hitpos, ray, hit); // normal at hitpos
+  hit.getPrimitive()->normal(normal, context, hitpos, ray, hit, motion_time); // normal at hitpos
   double costheta = Dot(normal, ray.direction());
   // make sure the normal of surface you hit is facing outward
 	if(costheta > 0)

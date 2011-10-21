@@ -15,7 +15,7 @@ class Primitive : public Object {
   virtual void preprocess();
   virtual void intersect(HitRecord& hit, const RenderContext& context, const Ray& ray, double t) const = 0;
   virtual void normal(Vector& normal, const RenderContext& context,
-                      const Point& hitpos, const Ray& ray, const HitRecord& hit) const = 0;
+                      const Point& hitpos, const Ray& ray, const HitRecord& hit, double t) const = 0;
 
   virtual void computeUVW(Vector& uvw, const RenderContext& context,
                           const Ray& ray, const HitRecord& hit) const;

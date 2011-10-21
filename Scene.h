@@ -94,7 +94,8 @@ class Scene {
   double minAttenuation;	// 最小衰減??
 	
 	int SSAA;					// super sampling anti aliasing number per axis
-
+	int DOF_ray;
+	int MotionBlurSample;
 };
 
 #endif

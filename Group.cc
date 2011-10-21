@@ -24,12 +24,12 @@ void Group::preprocess()
     (*begin++)->preprocess();
 }
 
-void Group::getBounds(BoundingBox& bbox) const
+void Group::getBounds(BoundingBox& bbox, double t) const
 {
   Object*const* begin = &objects[0];
   Object*const* end = &objects[0]+objects.size();
   while (begin != end)
-    (*begin++)->getBounds(bbox);
+    (*begin++)->getBounds(bbox, t);
 }
 
 void Group::intersect(HitRecord& hit, const RenderContext& context, const Ray& ray, double t) const

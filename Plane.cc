@@ -28,12 +28,12 @@ void Plane::intersect(HitRecord& hit, const RenderContext& context, const Ray& r
 }
 
 void Plane::normal(Vector& normal, const RenderContext&,
-                   const Point&, const Ray&, const HitRecord&) const
+                   const Point&, const Ray&, const HitRecord&, double t) const
 {
   normal = n;
 }
 
-void Plane::getBounds(BoundingBox& bbox) const
+void Plane::getBounds(BoundingBox& bbox, double t) const
 {
   cerr <<  "Plane::getBounds() called!" << endl;
   exit( 1 );
