@@ -12,7 +12,7 @@ class Sphere : public Primitive {
   virtual ~Sphere();
 
   virtual void getBounds(BoundingBox& bbox) const;
-  virtual void intersect(HitRecord& hit, const RenderContext& context, const Ray& ray) const;
+  virtual void intersect(HitRecord& hit, const RenderContext& context, const Ray& ray, double t) const;
   virtual void normal(Vector& normal, const RenderContext& context,
                       const Point& hitpos, const Ray& ray, const HitRecord& hit) const;
 	virtual void getName()const {

@@ -11,7 +11,7 @@ class LambertianMaterial : public Material {
   virtual ~LambertianMaterial();
 
   virtual void shade(Color& result, const RenderContext& context, const Ray& ray,
-                     const HitRecord& hit, const Color& atten, int depth) const;
+                     const HitRecord& hit, const Color& atten, int depth, double motion_time) const;
 
  private:
   LambertianMaterial(const LambertianMaterial&);

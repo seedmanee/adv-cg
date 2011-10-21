@@ -14,7 +14,7 @@ class Material {
 
   virtual void preprocess();
   virtual void shade(Color& result, const RenderContext& context, const Ray& ray,
-                     const HitRecord& hit, const Color& atten, int depth) const = 0;
+                     const HitRecord& hit, const Color& atten, int depth, double motion_time) const = 0;
 
  private:
   Material(const Material&);

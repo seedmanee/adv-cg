@@ -9,7 +9,7 @@
 
 class AperatureCamera : public PinholeCamera {
 public:
-  AperatureCamera(const Point& eye, const Point& lookat, const Vector& up, double hfov, double lensRadius, double focalDistance);
+  AperatureCamera(const Point& eye, const Point& lookat, const Vector& up, double hfov, double lensRadius, double focalDistance, double start_time, double end_time);
   virtual ~AperatureCamera();
   virtual void makeRay(Ray& ray, const RenderContext& context, double x, double y) const;
 

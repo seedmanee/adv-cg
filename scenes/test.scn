@@ -9,8 +9,10 @@ camera aperature {
   lookat [ 1.0, 1.0, 2.4 ]
   up [ 0.0, 0.0, 1.0 ]
   hfov 22.0
-	lensRadius 4.0
+	lensRadius 0.0
 	focalDistance 5.0
+	start_time 0
+	end_time 2
 }
 
 background constant {
@@ -55,7 +57,7 @@ scene group {
     center [ -0.5, -1.5, 2.0 ]
     radius 1.8
 		
-		velocity [1.0, 1.0, 1.0]
+//		velocity [1.0, 1.0, 1.0]
   }
 
   // yellow sphere

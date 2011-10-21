@@ -368,6 +368,8 @@ Camera *Parser::parseAperatureCamera()
   double hfov = 90.0;
 	double focal_distance = 2.5;
 	double lens_radius = 0.0;
+	double start_time = 0;
+	double end_time = 0;
   if ( peek( Token::left_brace ) )
     for ( ; ; )
     {
@@ -385,10 +387,14 @@ Camera *Parser::parseAperatureCamera()
 				lens_radius = parseReal();
 			else if ( peek("focalDistance"))
 				focal_distance = parseReal();
+			else if ( peek("start_time") )
+				start_time = parseReal();
+			else if ( peek("end_time") )
+				end_time = parseReal();
       else
         throwParseException( "Expected `eye', `lookat', `up', `hfov' or }." );
     }
-  return new AperatureCamera( eye, lookat, up, hfov, lens_radius, focal_distance);
+  return new AperatureCamera( eye, lookat, up, hfov, lens_radius, focal_distance, start_time, end_time);
 }
 
 Camera *Parser::parseCamera()

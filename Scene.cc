@@ -78,9 +78,8 @@ void Scene::render()
 	
 	int DOF_ray = 1;
 	
-	double motion_time = -1.0;
-	while (motion_time < 2.0){
-		
+	double motion_time = camera->start_time + drand48()* ( camera->end_time - camera->start_time);
+	
 		for(int i=0;i<yres;i++){
 			double y = ymin + i*dy;
 			
@@ -102,12 +101,12 @@ void Scene::render()
 
 							camera->makeRay(ray, context, xp, yp);
 							HitRecord hit(DBL_MAX);
-							object->intersect(hit, context, ray);
+							object->intersect(hit, context, ray, motion_time);
 							Color result;
 							if(hit.getPrimitive()){
 								// Ray hit something...
 								const Material* matl = hit.getMaterial();
-								matl->shade(result, context, ray, hit, atten, 0);
+								matl->shade(result, context, ray, hit, atten, 0, motion_time);
 							} else {
 								background->getBackgroundColor(result, context, ray);
 							}
@@ -123,21 +122,20 @@ void Scene::render()
 				image->set(j, i, result_sum);
 			}
 		} // end of for (x,y)
-	}
 }
 
-double Scene::traceRay(Color& result, const RenderContext& context, const Object* obj, const Ray& ray, const Color& atten, int depth) const
+double Scene::traceRay(Color& result, const RenderContext& context, const Object* obj, const Ray& ray, const Color& atten, int depth, double motion_time) const
 {
   if(depth >= maxRayDepth || atten.maxComponent() < minAttenuation){
     result = Color(0, 0, 0);
     return 0;
   } else {
     HitRecord hit(DBL_MAX);
-    obj->intersect(hit, context, ray);
+    obj->intersect(hit, context, ray, motion_time);
     if(hit.getPrimitive()){
       // Ray hit something...
       const Material* matl = hit.getMaterial();
-      matl->shade(result, context, ray, hit, atten, depth);
+      matl->shade(result, context, ray, hit, atten, depth, motion_time);
       return hit.minT();
     } else {
       background->getBackgroundColor(result, context, ray);
@@ -146,18 +144,18 @@ double Scene::traceRay(Color& result, const RenderContext& context, const Object
   }
 }
 
-double Scene::traceRay(Color& result, const RenderContext& context, const Ray& ray, const Color& atten, int depth) const
+double Scene::traceRay(Color& result, const RenderContext& context, const Ray& ray, const Color& atten, int depth, double motion_time) const
 {
 	if(depth >= maxRayDepth || atten.maxComponent() < minAttenuation){
 		result = Color(0, 0, 0);
 		return 0;
 	} else {
 		HitRecord hit(DBL_MAX);
-		object->intersect(hit, context, ray);
+		object->intersect(hit, context, ray, motion_time);
 		if(hit.getPrimitive()){
 				// Ray hit something...
 				const Material* matl = hit.getMaterial();
-				matl->shade(result, context, ray, hit, atten, depth);
+				matl->shade(result, context, ray, hit, atten, depth, motion_time);
 				return hit.minT();
 		} else {
 				background->getBackgroundColor(result, context, ray);

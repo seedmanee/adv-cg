@@ -6,9 +6,11 @@
 #include <math.h>
 
 AperatureCamera::AperatureCamera(const Point& eye, const Point& lookat, const Vector& up,
-                             double hfov, double lensRadius, double focalDistance)
+                             double hfov, double lensRadius, double focalDistance, double start_time, double end_time)
 : PinholeCamera(eye, lookat, up, hfov), lensRadius(lensRadius), focalDistance(focalDistance)
 {
+	this->start_time = start_time;
+	this->end_time   = end_time;
 }
 
 AperatureCamera::~AperatureCamera()

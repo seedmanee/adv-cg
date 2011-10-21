@@ -13,6 +13,9 @@ class Camera {
   virtual void preprocess(double aspect_ratio) = 0;
   virtual void makeRay(Ray& ray, const RenderContext& context, double x, double y) const = 0;
 
+	double start_time;
+	double end_time;
+	
  private:
   Camera(const Camera&);
   Camera& operator=(const Camera&);

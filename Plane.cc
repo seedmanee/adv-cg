@@ -18,7 +18,7 @@ Plane::~Plane()
 {
 }
 
-void Plane::intersect(HitRecord& hit, const RenderContext& context, const Ray& ray) const
+void Plane::intersect(HitRecord& hit, const RenderContext& context, const Ray& ray, double t) const
 {
   double denom = Dot(n, ray.direction());
   if(Abs(denom) > 1.e-6){

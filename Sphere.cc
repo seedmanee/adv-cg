@@ -24,9 +24,10 @@ void Sphere::getBounds(BoundingBox& bbox) const
   bbox.extend(center-diag);
 }
 
-void Sphere::intersect(HitRecord& hit, const RenderContext&, const Ray& ray) const
+void Sphere::intersect(HitRecord& hit, const RenderContext&, const Ray& ray, double t) const
 {
-  Vector O(ray.origin()-center);
+	Point t_center = center + t * velocity;
+  Vector O(ray.origin()-t_center);
   const Vector& V(ray.direction());
   double b = Dot(O, V);
   double c = Dot(O, O)-radius*radius;

@@ -22,7 +22,7 @@ LambertianMaterial::~LambertianMaterial()
 }
 
 void LambertianMaterial::shade(Color& result, const RenderContext& context,
-                               const Ray& ray, const HitRecord& hit, const Color& atten, int depth) const
+                               const Ray& ray, const HitRecord& hit, const Color& atten, int depth, double motion_time) const
 {
   const Scene* scene = context.getScene();
   const vector<Light*>& lights = scene->getLights();
@@ -59,7 +59,7 @@ void LambertianMaterial::shade(Color& result, const RenderContext& context,
 			// Cast shadow rays...
 			HitRecord shadowhit(dist);
 			Ray shadowray(hitpos, light_direction);
-			world->intersect(shadowhit, context, shadowray);
+			world->intersect(shadowhit, context, shadowray, motion_time);
 			if(!shadowhit.getPrimitive())
 			{
 				// No shadows...
@@ -76,7 +76,7 @@ void LambertianMaterial::shade(Color& result, const RenderContext& context,
 	
 	// add recursive part
 	Color reflection_result;
-	context.getScene()->traceRay(reflection_result, context, reflection_ray, atten * atten_factor, depth + 1);
+	context.getScene()->traceRay(reflection_result, context, reflection_ray, atten * atten_factor, depth + 1, motion_time);
 	
 	Color reflection_diffuse = reflection_result * atten_factor * Kd * Dot(normal, reflection_ray_direction) ;
 	Color reflection_specular = reflection_result * atten_factor * Ks * pow( max(Dot(reflection_ray_direction, -ray.direction()), 0.0), alpha);
