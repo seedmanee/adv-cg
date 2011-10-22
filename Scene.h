@@ -74,6 +74,18 @@ class Scene {
   void setMinAttenuation(double atten) {
     minAttenuation = atten;
   }
+	
+	void setSamplesPerPixel(double spp){
+		SSAA = (int)spp;
+	}
+	
+	void setMotionBlurSample(double mbs){
+		MotionBlurSample = (int)mbs;
+	}
+	
+	void setDOFSample(double dofs){
+		DOF_ray = (int)dofs;
+	}
 
   void preprocess();
   void render();
@@ -93,6 +105,7 @@ class Scene {
   int maxRayDepth;				// maximum ray tracing recursive depth
   double minAttenuation;	// 最小衰減??
 	
+//	double SamplesPerPixel;
 	int SSAA;					// super sampling anti aliasing number per axis
 	int DOF_ray;
 	int MotionBlurSample;

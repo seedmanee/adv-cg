@@ -29,6 +29,9 @@
 		1B28837B1439256100FA91EA /* Sphere.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1B2883621439256100FA91EA /* Sphere.cc */; };
 		1B28837C1439256100FA91EA /* Time.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1B2883641439256100FA91EA /* Time.cc */; };
 		1B28837D1439256100FA91EA /* Vector.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1B2883661439256100FA91EA /* Vector.cc */; };
+		1B43660D145233E700805B10 /* Triangle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B43660C145233E700805B10 /* Triangle.cpp */; };
+		1B48554C14525D9600CE4823 /* Polygon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B48554B14525D9600CE4823 /* Polygon.cpp */; };
+		1BD85EFA144D66C4003023E1 /* AperatureCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1BD85EF9144D66C4003023E1 /* AperatureCamera.cpp */; };
 		8DD76F6A0486A84900D96B5E /* adv_cg_xcode.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = C6859E8B029090EE04C91782 /* adv_cg_xcode.1 */; };
 /* End PBXBuildFile section */
 
@@ -46,6 +49,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1B09F1E6144FF66C00756DD3 /* otho.scn */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = otho.scn; path = scenes/otho.scn; sourceTree = "<group>"; };
 		1B2883371439256100FA91EA /* Background.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Background.cc; sourceTree = "<group>"; };
 		1B2883381439256100FA91EA /* Background.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Background.h; sourceTree = "<group>"; };
 		1B2883391439256100FA91EA /* BoundingBox.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BoundingBox.cc; sourceTree = "<group>"; };
@@ -94,6 +98,12 @@
 		1B2883651439256100FA91EA /* Time.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Time.h; sourceTree = "<group>"; };
 		1B2883661439256100FA91EA /* Vector.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Vector.cc; sourceTree = "<group>"; };
 		1B2883671439256100FA91EA /* Vector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vector.h; sourceTree = "<group>"; };
+		1B43660B145233E700805B10 /* Triangle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Triangle.h; sourceTree = "<group>"; };
+		1B43660C145233E700805B10 /* Triangle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Triangle.cpp; sourceTree = "<group>"; };
+		1B48554A14525D9600CE4823 /* Polygon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Polygon.h; sourceTree = "<group>"; };
+		1B48554B14525D9600CE4823 /* Polygon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Polygon.cpp; sourceTree = "<group>"; };
+		1BD85EF8144D66C4003023E1 /* AperatureCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AperatureCamera.h; sourceTree = "<group>"; };
+		1BD85EF9144D66C4003023E1 /* AperatureCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AperatureCamera.cpp; sourceTree = "<group>"; };
 		8DD76F6C0486A84900D96B5E /* adv_cg_xcode */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = adv_cg_xcode; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6859E8B029090EE04C91782 /* adv_cg_xcode.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = adv_cg_xcode.1; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -150,6 +160,8 @@
 				1B28833C1439256100FA91EA /* Camera.h */,
 				1B2883511439256100FA91EA /* PinholeCamera.cc */,
 				1B2883521439256100FA91EA /* PinholeCamera.h */,
+				1BD85EF8144D66C4003023E1 /* AperatureCamera.h */,
+				1BD85EF9144D66C4003023E1 /* AperatureCamera.cpp */,
 			);
 			name = "pinhole camera";
 			sourceTree = "<group>";
@@ -157,6 +169,8 @@
 		1B288395143925E200FA91EA /* object */ = {
 			isa = PBXGroup;
 			children = (
+				1B48554A14525D9600CE4823 /* Polygon.h */,
+				1B48554B14525D9600CE4823 /* Polygon.cpp */,
 				1B2883411439256100FA91EA /* Group.cc */,
 				1B2883421439256100FA91EA /* Group.h */,
 				1B28834D1439256100FA91EA /* Object.cc */,
@@ -167,6 +181,8 @@
 				1B28835A1439256100FA91EA /* Primitive.h */,
 				1B2883621439256100FA91EA /* Sphere.cc */,
 				1B2883631439256100FA91EA /* Sphere.h */,
+				1B43660B145233E700805B10 /* Triangle.h */,
+				1B43660C145233E700805B10 /* Triangle.cpp */,
 			);
 			name = object;
 			sourceTree = "<group>";
@@ -232,6 +248,7 @@
 		C6859E8C029090F304C91782 /* Documentation */ = {
 			isa = PBXGroup;
 			children = (
+				1B09F1E6144FF66C00756DD3 /* otho.scn */,
 				1B2883601439256100FA91EA /* test.scn */,
 				C6859E8B029090EE04C91782 /* adv_cg_xcode.1 */,
 			);
@@ -310,6 +327,9 @@
 				1B28837B1439256100FA91EA /* Sphere.cc in Sources */,
 				1B28837C1439256100FA91EA /* Time.cc in Sources */,
 				1B28837D1439256100FA91EA /* Vector.cc in Sources */,
+				1BD85EFA144D66C4003023E1 /* AperatureCamera.cpp in Sources */,
+				1B43660D145233E700805B10 /* Triangle.cpp in Sources */,
+				1B48554C14525D9600CE4823 /* Polygon.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

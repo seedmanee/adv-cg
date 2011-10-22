@@ -8,6 +8,7 @@
 #include "Group.h"
 #include "Plane.h"
 #include "Sphere.h"
+#include "Polygon.h"
 #include "Scene.h"
 #include "Image.h"
 #include <cmath>
@@ -557,6 +558,32 @@ Object *Parser::parseSphereObject()
   return new Sphere( material, center, radius, velocity );
 }
 
+Object *Parser::parsePolygonObject()
+{
+	Material *material = default_material;
+	Vector velocity( 0.0, 0.0, 0.0);
+	Triangle *triangle_list;
+	int triangle_number;
+	if ( peek( Token::left_brace ) )
+    while(true)
+    {
+      if ( peek( "material" ) )
+        material = parseMaterial();
+			else if ( peek( "velocity" ) )
+				velocity = parseVector();
+			else if ( peek( "point_list" ) )
+				;
+			else if ( peek( "triangle_list" ) )
+				;
+      else if ( peek( Token::right_brace ) )
+        break;
+      else
+        throwParseException( "Expected `material' or }." );
+    }
+	
+	return new Polygon(material, velocity, triangle_list, triangle_number);
+}
+
 Object *Parser::parseObject()
 {
     if ( peek( "group" ) )
@@ -565,6 +592,8 @@ Object *Parser::parseObject()
         return parsePlaneObject();
     else if ( peek( "sphere" ) )
         return parseSphereObject();
+	  else if ( peek( "polygon" ) )
+				return parsePolygonObject();
     else if ( next_token.token_type == Token::string )
     {
         map< string, Object * >::iterator found = defined_objects.find( parseString() );
@@ -613,6 +642,12 @@ Scene *Parser::parseScene(
       scene->addLight( parseLight() );
     else if ( peek( "scene" ) )
       scene->setObject( parseObject() );
+		else if ( peek( "SamplesPerPixel" ))
+			scene->setSamplesPerPixel(sqrt(parseReal()));
+		else if ( peek( "MotionBlurSample" ))
+			scene->setMotionBlurSample(parseReal());
+		else if ( peek( "DOFSample" ))
+			scene->setDOFSample( parseReal());
     else if ( peek( "define" ) ) {
       if ( peek( "material" ) ) {
         string name( parseString() );

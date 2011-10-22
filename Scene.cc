@@ -28,9 +28,10 @@ Scene::Scene()
   minAttenuation = 0.1;
 
   maxRayDepth = 10;
-  SSAA = 1;  // super sampling anti aliasing
-	DOF_ray = 2;
-	MotionBlurSample = 2;
+	
+	SSAA = 1;
+	DOF_ray = 1;
+	MotionBlurSample = 1;
 }
 
 Scene::~Scene()

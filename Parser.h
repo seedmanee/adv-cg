@@ -8,6 +8,7 @@
 #include <iostream>
 #include <string>
 #include <map>
+#include <vector>
 
 class Camera;
 class Background;
@@ -15,6 +16,7 @@ class Light;
 class Material;
 class Object;
 class Scene;
+class Triangle;
 
 class Parser {
 
@@ -80,15 +82,17 @@ class Parser {
   Object *parseGroupObject();
   Object *parsePlaneObject();
   Object *parseSphereObject();
+	Object *parsePolygonObject();
   Object *parseObject();
+
+	std::vector <Point> parsePointList();
+	std::vector <Triangle> parseTriangleList();
 
   public:
 
-  Parser(
-    std::istream &input );
+  Parser( std::istream &input );
 
-  Scene *parseScene(
-    std::string &filename );
+  Scene *parseScene( std::string &filename );
 
 };
 
