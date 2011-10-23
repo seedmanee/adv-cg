@@ -12,7 +12,7 @@ class Point;
 
 class Polygon : public Primitive {
 public:
-  Polygon(Material* material, const Vector &velocity, Point *plist, int pn, int *flist, int fn);
+  Polygon(Material* material, const Vector &velocity, std::vector<Point *>plist, int *flist, int fn);
   virtual ~Polygon();
 	
   virtual void getBounds(BoundingBox& bbox, double t) const;
@@ -24,8 +24,7 @@ public:
 	}
 	
 protected:
-	int pn;
-	Point *plist;
+	std::vector<Point *>plist;
 	int fn;
 	int *flist;
 	Vector velocity;

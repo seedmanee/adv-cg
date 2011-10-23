@@ -560,12 +560,27 @@ Object *Parser::parseSphereObject()
 
 Point *Parser::parsePointList(int pn)
 {
+	
 	match(Token::left_brace, "Expect a left brace");
 	Point *plist = new Point[pn];
 	for (int i = 0; i < pn; i++) {
 		plist[i] = parsePoint();
 	}
 	match(Token::right_brace, "Expect a right brace");
+	return plist;
+}
+
+std::vector <Point *> Parser::parsePointList()
+{
+	std::vector <Point*> plist;
+	Point p;
+	match(Token::left_brace, "Expect a left brace");
+	while (peek("v")) {
+	//	p = parsePoint();
+		plist.push_back(new Point(parsePoint()));
+	}
+	match(Token::right_brace, "Expect a right brace");
+	
 	return plist;
 }
 
@@ -592,8 +607,8 @@ Object *Parser::parsePolygonObject()
 	Material *material = default_material;
 	Vector velocity( 0.0, 0.0, 0.0);
 	
-	Point *plist;
-	int pn = 0;
+	std::vector<Point*> plist;
+//	int pn = 0;
 	int *flist;
 	int fn = 0;
 	
@@ -605,8 +620,7 @@ Object *Parser::parsePolygonObject()
 			else if ( peek( "velocity" ) )
 				velocity = parseVector();
 			else if ( peek( "point_list" ) ){
-				pn = parseInteger();
-			  plist = parsePointList(pn);
+				plist = parsePointList();
 			} else if ( peek( "face_list" ) ) {
 				fn = parseInteger();
 				flist = parseFaceList(fn);
@@ -616,7 +630,7 @@ Object *Parser::parsePolygonObject()
         throwParseException( "Expected `material' or }." );
     }
 	
-	return new Polygon(material, velocity, plist, pn, flist, fn);
+	return new Polygon(material, velocity, plist, flist, fn);
 }
 
 Object *Parser::parseObject()

@@ -86,6 +86,7 @@ class Parser {
   Object *parseObject();
 
 	Point * parsePointList(int);
+	std::vector <Point *> parsePointList();
 	int *parseFaceList(int);
 
   public:

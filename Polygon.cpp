@@ -10,18 +10,11 @@
 #include <math.h>
 #include <cfloat>
 
-Polygon::Polygon(Material* material, const Vector &velocity, Point *plist, int pn, int *flist, int fn)
-: Primitive(material), velocity(velocity), plist(plist), pn(pn), flist(flist), fn(fn)
+Polygon::Polygon(Material* material, const Vector &velocity, std::vector<Point *>plist, int *flist, int fn)
+: Primitive(material), velocity(velocity), plist(plist), flist(flist), fn(fn)
 {
-	for (int i=0; i<pn; i++) {
-		std::cout << plist[i] << std::endl;
-	}
-
-	for (int i=0; i<fn; i++) {
-		for (int j=0; j<3; j++) {
-			std::cout << flist[3*i+j] << " ";
-		}
-		std::cout << std::endl;
+	for (int i=0; i<plist.size(); i++) {
+		std::cout << *(plist[i]) << std::endl;
 	}
 }
 
@@ -31,8 +24,8 @@ Polygon::~Polygon()
 
 void Polygon::getBounds(BoundingBox& bbox, double t) const
 {
-	for (int i=0; i<pn; i++) {
-		bbox.extend(plist[i] + t * velocity);
+	for (int i=0; i<plist.size(); i++) {
+		bbox.extend(*(plist[i]) + t * velocity);
 	}
 }
 
@@ -65,9 +58,9 @@ void Polygon::BetaGammaT(Point &beta_gamma_t,const Vector &c1,const Vector &c2,c
 void Polygon::intersect(HitRecord& hit, const RenderContext&, const Ray& ray, double t) const
 {
 	for (int z = 0; z < fn; z++) {
-		Point pa = plist[flist[3*z  ]] + t*velocity;
-		Point pb = plist[flist[3*z+1]] + t*velocity;
-		Point pc = plist[flist[3*z+2]] + t*velocity;
+		Point pa = *(plist[flist[3*z  ]]) + t*velocity;
+		Point pb = *(plist[flist[3*z+1]]) + t*velocity;
+		Point pc = *(plist[flist[3*z+2]]) + t*velocity;
 	
 		Point result;
 		
@@ -83,9 +76,9 @@ void Polygon::normal(Vector& normal, const RenderContext&, const Point& hitpos,
                     const Ray& ray, const HitRecord& hit, double t) const
 {
 	for (int z=0; z<fn; z++) {
-		Point pa = plist[flist[3*z  ]] + t*velocity;
-		Point pb = plist[flist[3*z+1]] + t*velocity;
-		Point pc = plist[flist[3*z+2]] + t*velocity;
+		Point pa = *(plist[flist[3*z  ]]) + t*velocity;
+		Point pb = *(plist[flist[3*z+1]]) + t*velocity;
+		Point pc = *(plist[flist[3*z+2]]) + t*velocity;
 		
 		Vector vba = pb - pa;
 		Vector vca = pc - pa;
