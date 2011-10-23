@@ -311,7 +311,7 @@ Vector const Parser::parseVector()
 
 Point const Parser::parsePoint()
 {
-  match( Token::left_bracket, "Expected a left bracket" );
+  match( Token::left_bracket, "P: Expected a left bracket" );
   double x = parseReal();
   match( Token::comma, "Expected a comma" );
   double y = parseReal();
@@ -558,12 +558,44 @@ Object *Parser::parseSphereObject()
   return new Sphere( material, center, radius, velocity );
 }
 
+Point *Parser::parsePointList(int pn)
+{
+	peek(Token::left_brace);
+	Point *plist = new Point[pn];
+	for (int i = 0; i < pn; i++) {
+		plist[i] = parsePoint();
+	}
+	peek(Token::right_brace);
+	return plist;
+}
+
+int *Parser::parseFaceList(int fn)
+{
+	peek(Token::left_brace);
+	int *flist = new int[3*fn];
+	for (int i = 0; i < fn; i++) {
+		peek(Token::left_bracket);
+		flist[3 * i    ] = parseInteger();
+		peek(Token::comma);
+		flist[3 * i + 1] = parseInteger();
+		peek(Token::comma);
+		flist[3 * i + 2] = parseInteger();
+		peek(Token::right_bracket);
+	}
+	peek(Token::right_brace);
+	return flist;
+}
+
 Object *Parser::parsePolygonObject()
 {
 	Material *material = default_material;
 	Vector velocity( 0.0, 0.0, 0.0);
-	Triangle *triangle_list;
-	int triangle_number;
+	
+	Point *plist;
+	int pn = 0;
+	int *flist;
+	int fn = 0;
+	
 	if ( peek( Token::left_brace ) )
     while(true)
     {
@@ -571,17 +603,19 @@ Object *Parser::parsePolygonObject()
         material = parseMaterial();
 			else if ( peek( "velocity" ) )
 				velocity = parseVector();
-			else if ( peek( "point_list" ) )
-				;
-			else if ( peek( "triangle_list" ) )
-				;
-      else if ( peek( Token::right_brace ) )
+			else if ( peek( "point_list" ) ){
+				pn = parseInteger();
+			  plist = parsePointList(pn);
+			} else if ( peek( "face_list" ) ) {
+				fn = parseInteger();
+				flist = parseFaceList(fn);
+		  } else if ( peek( Token::right_brace ) )
         break;
       else
         throwParseException( "Expected `material' or }." );
     }
 	
-	return new Polygon(material, velocity, triangle_list, triangle_number);
+	return new Polygon(material, velocity, plist, pn, flist, fn);
 }
 
 Object *Parser::parseObject()

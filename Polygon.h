@@ -4,7 +4,6 @@
 
 #include "Primitive.h"
 #include "Point.h"
-#include "Triangle.h"
 #include <vector>
 
 class Ray;
@@ -12,7 +11,7 @@ class Triangle;
 
 class Polygon : public Primitive {
 public:
-  Polygon(Material* material, const Vector &velocity, Triangle *triangle_list, int triangle_number);
+  Polygon(Material* material, const Vector &velocity, Point *plist, int pn, int *flist, int fn);
   virtual ~Polygon();
 	
   virtual void getBounds(BoundingBox& bbox, double t) const;
@@ -24,7 +23,10 @@ public:
 	}
 	
 protected:
-	int triangle_number;
+	int pn;
+	Point *plist;
+	int fn;
+	int *flist;
 	Vector velocity;
 };
 

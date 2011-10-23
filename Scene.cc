@@ -59,7 +59,7 @@ void Scene::preprocess()
 }
 
 inline double randMotionTimeGaussian(double start_time, double end_time){
-	double sigma = (end_time - start_time) / 3;
+	double sigma = (end_time - start_time) / 4;
 	double mu = (end_time + 2 * start_time )/3.0;
 	double u1 = drand48();
 	double u2 = drand48();
