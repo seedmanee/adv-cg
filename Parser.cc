@@ -311,7 +311,7 @@ Vector const Parser::parseVector()
 
 Point const Parser::parsePoint()
 {
-  match( Token::left_bracket, "P: Expected a left bracket" );
+  match( Token::left_bracket, "Expected a left bracket" );
   double x = parseReal();
   match( Token::comma, "Expected a comma" );
   double y = parseReal();
@@ -560,29 +560,30 @@ Object *Parser::parseSphereObject()
 
 Point *Parser::parsePointList(int pn)
 {
-	peek(Token::left_brace);
+	match(Token::left_brace, "Expect a left brace");
 	Point *plist = new Point[pn];
 	for (int i = 0; i < pn; i++) {
 		plist[i] = parsePoint();
 	}
-	peek(Token::right_brace);
+	match(Token::right_brace, "Expect a right brace");
 	return plist;
 }
 
 int *Parser::parseFaceList(int fn)
 {
-	peek(Token::left_brace);
+	match(Token::left_brace, "Expect a left brace");
+	
 	int *flist = new int[3*fn];
 	for (int i = 0; i < fn; i++) {
-		peek(Token::left_bracket);
+		match(Token::left_bracket, "Expect a left bracket");
 		flist[3 * i    ] = parseInteger();
-		peek(Token::comma);
+		match(Token::comma, "Expect a comma");
 		flist[3 * i + 1] = parseInteger();
-		peek(Token::comma);
+		match(Token::comma, "Expect a comma");
 		flist[3 * i + 2] = parseInteger();
-		peek(Token::right_bracket);
+		match(Token::right_bracket, "Expect a right bracket");
 	}
-	peek(Token::right_brace);
+	match(Token::right_brace, "Expect a right brace");
 	return flist;
 }
 

@@ -7,7 +7,8 @@
 #include <vector>
 
 class Ray;
-class Triangle;
+//class Vector;
+class Point;
 
 class Polygon : public Primitive {
 public:
@@ -28,6 +29,8 @@ protected:
 	int fn;
 	int *flist;
 	Vector velocity;
+private:
+	void BetaGammaT(Point &,const Vector&,const Vector&,const Vector&,const Vector&) const;
 };
 
 #endif
