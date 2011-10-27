@@ -30,7 +30,6 @@
 		1B28837C1439256100FA91EA /* Time.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1B2883641439256100FA91EA /* Time.cc */; };
 		1B28837D1439256100FA91EA /* Vector.cc in Sources */ = {isa = PBXBuildFile; fileRef = 1B2883661439256100FA91EA /* Vector.cc */; };
 		1B48554C14525D9600CE4823 /* Polygon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B48554B14525D9600CE4823 /* Polygon.cpp */; };
-		1B8450061453EC7B00633561 /* Matrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1B8450051453EC7B00633561 /* Matrix.cpp */; };
 		1BD85EFA144D66C4003023E1 /* AperatureCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1BD85EF9144D66C4003023E1 /* AperatureCamera.cpp */; };
 		8DD76F6A0486A84900D96B5E /* adv_cg_xcode.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = C6859E8B029090EE04C91782 /* adv_cg_xcode.1 */; };
 /* End PBXBuildFile section */
@@ -99,8 +98,6 @@
 		1B2883671439256100FA91EA /* Vector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vector.h; sourceTree = "<group>"; };
 		1B48554A14525D9600CE4823 /* Polygon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Polygon.h; sourceTree = "<group>"; };
 		1B48554B14525D9600CE4823 /* Polygon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Polygon.cpp; sourceTree = "<group>"; };
-		1B8450041453EC7B00633561 /* Matrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Matrix.h; sourceTree = "<group>"; };
-		1B8450051453EC7B00633561 /* Matrix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Matrix.cpp; sourceTree = "<group>"; };
 		1BD85EF8144D66C4003023E1 /* AperatureCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AperatureCamera.h; sourceTree = "<group>"; };
 		1BD85EF9144D66C4003023E1 /* AperatureCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AperatureCamera.cpp; sourceTree = "<group>"; };
 		1BF0C2471458D3880048074A /* cornell_box.scn */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = cornell_box.scn; path = scenes/cornell_box.scn; sourceTree = "<group>"; };
@@ -206,8 +203,6 @@
 				1B2883651439256100FA91EA /* Time.h */,
 				1B2883661439256100FA91EA /* Vector.cc */,
 				1B2883671439256100FA91EA /* Vector.h */,
-				1B8450041453EC7B00633561 /* Matrix.h */,
-				1B8450051453EC7B00633561 /* Matrix.cpp */,
 			);
 			name = "basic routine";
 			sourceTree = "<group>";
@@ -329,7 +324,6 @@
 				1B28837D1439256100FA91EA /* Vector.cc in Sources */,
 				1BD85EFA144D66C4003023E1 /* AperatureCamera.cpp in Sources */,
 				1B48554C14525D9600CE4823 /* Polygon.cpp in Sources */,
-				1B8450061453EC7B00633561 /* Matrix.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

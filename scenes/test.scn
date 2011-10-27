@@ -3,19 +3,24 @@
 xres 512
 yres 512
 filename "image.ppm"
-SamplesPerPixel 1
-DOFSample 1
-MotionBlurSample 1
+SamplesPerPixel 16
+DOFSample 16
+MotionBlurSample 16
 
 camera aperature {
   eye [ -24.0, -2.0, 5.2 ]
   lookat [ 1.0, 1.0, 2.4 ]
   up [ 0.0, 0.0, 1.0 ]
   hfov 22.0
-	lensRadius 0.0
-	focalDistance 5.7
+	
+	lensRadius 1.5
+//	lensRadius 0.0
+	
+	focalDistance 0.7
+//	imageDistance 7.0  // focus on 30 = blue ball
+	imageDistance 6.4  // focus on 25 = red ball
 	start_time 0
-	end_time 2
+	end_time 4
 }
 
 background constant {
@@ -45,10 +50,10 @@ scene group {
 		}
 		
 		point_list {
-			[4.0, -1.0, 2.0]
-			[5.0,  1.0, 5.0]
-			[1.3, -3.4, 5.0] 
-			[6.3, -2.4, 6.0]
+			[4.0, -1.0, 2.5]
+			[5.0,  1.0, 5.5]
+			[1.3, -3.4, 5.5] 
+			[6.3, -2.4, 6.5]
 		}
 		
 		face_list {
@@ -83,8 +88,6 @@ scene group {
     }
     center [ 1.5, -1.5, 2.0 ]
     radius 1.8
-		
-//		velocity [1.0, 1.0, 1.0]
   }
 
   // yellow sphere
@@ -99,6 +102,8 @@ scene group {
     center [ -4.0, 0.2, 1.7 ]
     radius 1.0
 		velocity [-2.0, 1.5, 0.5]
+		start_time 1.0
+		end_time 2.5
   }
 
 	 sphere {

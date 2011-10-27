@@ -57,7 +57,7 @@ void Scene::preprocess()
   camera->preprocess(aspect_ratio);
   object->preprocess();
 }
-
+/*
 inline double randMotionTimeGaussian(double start_time, double end_time){
 	double sigma = (end_time - start_time) / 4;
 	double mu = (end_time + 2 * start_time )/3.0;
@@ -65,11 +65,10 @@ inline double randMotionTimeGaussian(double start_time, double end_time){
 	double u2 = drand48();
 	
 	double z1 = sqrt(-2 * log(u1)) * sin(2 * M_PI * u2);
-//	double z2 = sqrt(-2 * log(u1)) * cos(2 * M_PI * u2);
 	
 	return mu + z1 * sigma;
-	//x2 = mu + z2 * sigma;
 }
+ */
 
 inline double randMotionTime(double start_time, double end_time){	
 	return start_time + drand48() * (end_time - start_time);
@@ -115,7 +114,7 @@ void Scene::render()
 						Color result_motion(0.0, 0.0, 0.0);
 						for (int mbt = 0; mbt < MotionBlurSample; mbt++) {
 
-							double motion_time = randMotionTimeGaussian(camera->start_time, camera->end_time);
+							double motion_time = randMotionTime(camera->start_time, camera->end_time);
 
 							camera->makeRay(ray, context, xp, yp);
 							HitRecord hit(DBL_MAX);

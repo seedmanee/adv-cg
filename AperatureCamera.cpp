@@ -6,11 +6,12 @@
 #include <math.h>
 
 AperatureCamera::AperatureCamera(const Point& eye, const Point& lookat, const Vector& up,
-                             double hfov, double lensRadius, double focalDistance, double start_time, double end_time)
-: PinholeCamera(eye, lookat, up, hfov), lensRadius(lensRadius), focalDistance(focalDistance)
+                             double hfov, double lensRadius, double focalDistance, double imageDistance, double start_time, double end_time)
+: PinholeCamera(eye, lookat, up, hfov), lensRadius(lensRadius), focalDistance(focalDistance), imageDistance(imageDistance)
 {
 	this->start_time = start_time;
 	this->end_time   = end_time;
+	projectDistance = imageDistance * focalDistance * (imageDistance - focalDistance);
 }
 
 AperatureCamera::~AperatureCamera()
@@ -31,10 +32,7 @@ void AperatureCamera::makeRay(Ray& ray, const RenderContext& context, double x, 
 	direction.normalize();
 	
 	Vector straight = lookdir * Dot(direction, lookat);
-	
-	double imageDistance = 7.0;
 
-	double projectDistance = imageDistance * focalDistance / (imageDistance - focalDistance);
 	double ft = (projectDistance) / straight.length();
 
 	Point Pfocus = eye + direction * ft;

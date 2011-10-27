@@ -8,7 +8,7 @@ class Ray;
 
 class Sphere : public Primitive {
  public:
-  Sphere(Material* material, const Point& center, double radius, const Vector &velocity);
+  Sphere(Material* material, const Point& center, double radius, const Vector &velocity, double, double);
   virtual ~Sphere();
 
   virtual void getBounds(BoundingBox& bbox, double t) const;
@@ -23,6 +23,7 @@ class Sphere : public Primitive {
 	Vector velocity;
   double radius;
   double inv_radius;
+	
 };
 
 #endif

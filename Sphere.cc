@@ -7,10 +7,12 @@
 #include "Vector.h"
 #include <math.h>
 
-Sphere::Sphere(Material* material, const Point& center, double radius, const Vector& velocity)
+Sphere::Sphere(Material* material, const Point& center, double radius, const Vector& velocity, double start_time, double end_time)
   : Primitive(material), center(center), radius(radius), velocity(velocity)
 {
   inv_radius = 1./radius;
+	this->start_time = start_time;
+	this->end_time = end_time;
 }
 
 Sphere::~Sphere()
@@ -19,7 +21,7 @@ Sphere::~Sphere()
 
 void Sphere::getBounds(BoundingBox& bbox, double t) const
 {
-	Point t_center = center + t * velocity;
+	Point t_center = center + (inRange(t) - start_time) * velocity;
   Vector diag(radius, radius, radius);
   bbox.extend(t_center+diag);
   bbox.extend(t_center-diag);
@@ -27,7 +29,7 @@ void Sphere::getBounds(BoundingBox& bbox, double t) const
 
 void Sphere::intersect(HitRecord& hit, const RenderContext&, const Ray& ray, double t) const
 {
-	Point t_center = center + t * velocity;
+	Point t_center = center + (inRange(t) - start_time) * velocity;
   Vector O(ray.origin()-t_center);
   const Vector& V(ray.direction());
   double b = Dot(O, V);
@@ -49,6 +51,6 @@ void Sphere::intersect(HitRecord& hit, const RenderContext&, const Ray& ray, dou
 void Sphere::normal(Vector& normal, const RenderContext&, const Point& hitpos,
                     const Ray& ray, const HitRecord& hit, double t) const
 {
-	Point t_center = center + t * velocity;
+	Point t_center = center + (inRange(t) - start_time) * velocity;
   normal = (hitpos-t_center)*inv_radius;
 }

@@ -1,7 +1,7 @@
 
 #include "Object.h"
 
-Object::Object()
+Object::Object(): start_time(0), end_time(0)
 {
 }
 

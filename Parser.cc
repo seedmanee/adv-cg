@@ -368,6 +368,7 @@ Camera *Parser::parseAperatureCamera()
   Vector up( 0.0, 0.0, 1.0 );
   double hfov = 90.0;
 	double focal_distance = 2.5;
+	double image_distance = 3.0;
 	double lens_radius = 0.0;
 	double start_time = 0;
 	double end_time = 0;
@@ -388,6 +389,8 @@ Camera *Parser::parseAperatureCamera()
 				lens_radius = parseReal();
 			else if ( peek("focalDistance"))
 				focal_distance = parseReal();
+			else if ( peek("imageDistance") )
+				image_distance = parseReal();
 			else if ( peek("start_time") )
 				start_time = parseReal();
 			else if ( peek("end_time") )
@@ -395,7 +398,7 @@ Camera *Parser::parseAperatureCamera()
       else
         throwParseException( "Expected `eye', `lookat', `up', `hfov' or }." );
     }
-  return new AperatureCamera( eye, lookat, up, hfov, lens_radius, focal_distance, start_time, end_time);
+  return new AperatureCamera( eye, lookat, up, hfov, lens_radius, focal_distance, image_distance, start_time, end_time);
 }
 
 Camera *Parser::parseCamera()
@@ -539,6 +542,8 @@ Object *Parser::parseSphereObject()
   Point center( 0.0, 0.0, 0.0 );
 	Vector velocity( 0.0, 0.0, 0.0);
   double radius = 0.5;
+	double start_time = 0;
+	double end_time = 4;
   if ( peek( Token::left_brace ) )
     for ( ; ; )
     {
@@ -550,12 +555,16 @@ Object *Parser::parseSphereObject()
         radius = parseReal();
 			else if ( peek( "velocity" ) )
 				velocity = parseVector();
+			else if ( peek( "start_time" ) )
+				start_time = parseReal();
+			else if ( peek( "end_time" ) )
+				end_time = parseReal();
       else if ( peek( Token::right_brace ) )
         break;
       else
         throwParseException( "Expected `material', `center', `radius' or }." );
     }
-  return new Sphere( material, center, radius, velocity );
+  return new Sphere( material, center, radius, velocity, start_time, end_time );
 }
 
 std::vector <Point> Parser::parsePointList()

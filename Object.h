@@ -10,6 +10,14 @@ class HitRecord;
 class Ray;
 class RenderContext;
 
+inline double max(double a, double b){
+	return (a>b)?a : b;
+}
+
+inline double min(double a, double b){
+	return (a<b)?a : b;
+}
+
 class Object {
  public:
   Object();
@@ -22,6 +30,13 @@ class Object {
  private:
   Object(const Object&);
   Object& operator=(const Object&);
+	
+protected:
+	double inRange(const double t) const{
+		return min(max(t, start_time), end_time);
+	}
+	double start_time;
+	double end_time;
 };
 
 #endif
