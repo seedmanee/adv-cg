@@ -85,9 +85,9 @@ class Parser {
 	Object *parsePolygonObject();
   Object *parseObject();
 
-	Point * parsePointList(int);
-	std::vector <Point *> parsePointList();
-	int *parseFaceList(int);
+	std::vector <Point> parsePointList();
+	std::vector <int> parseFace();
+	std::vector <std::vector<int> > parseFaceList();
 
   public:
 

@@ -12,7 +12,8 @@ class Point;
 
 class Polygon : public Primitive {
 public:
-  Polygon(Material* material, const Vector &velocity, std::vector<Point *>plist, int *flist, int fn);
+  Polygon(Material* material, const Vector &velocity, std::vector<Point> &plist, 
+					std::vector<std::vector<int> > &flist);
   virtual ~Polygon();
 	
   virtual void getBounds(BoundingBox& bbox, double t) const;
@@ -24,9 +25,8 @@ public:
 	}
 	
 protected:
-	std::vector<Point *>plist;
-	int fn;
-	int *flist;
+	std::vector<Point>plist;
+	std::vector<std::vector<int> >flist;
 	Vector velocity;
 private:
 	void BetaGammaT(Point &,const Vector&,const Vector&,const Vector&,const Vector&) const;

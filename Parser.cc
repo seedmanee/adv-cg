@@ -339,8 +339,8 @@ Color const Parser::parseColor()
 Camera *Parser::parsePinholeCamera()
 {
   Point eye( 0.0, 0.0, 0.0 );
-  Point lookat( 0.0, 1.0, 0.0 );
-  Vector up( 0.0, 0.0, 1.0 );
+  Point lookat( 0.0, 0.0, 1.0 );
+  Vector up( 0.0, 1.0, 0.0 );
   double hfov = 90.0;
   if ( peek( Token::left_brace ) )
     for ( ; ; )
@@ -558,47 +558,42 @@ Object *Parser::parseSphereObject()
   return new Sphere( material, center, radius, velocity );
 }
 
-Point *Parser::parsePointList(int pn)
+std::vector <Point> Parser::parsePointList()
 {
+	std::vector <Point> plist;
 	
 	match(Token::left_brace, "Expect a left brace");
-	Point *plist = new Point[pn];
-	for (int i = 0; i < pn; i++) {
-		plist[i] = parsePoint();
+	while (!peek(Token::right_brace)) {
+		plist.push_back(parsePoint());
 	}
-	match(Token::right_brace, "Expect a right brace");
-	return plist;
-}
-
-std::vector <Point *> Parser::parsePointList()
-{
-	std::vector <Point*> plist;
-	Point p;
-	match(Token::left_brace, "Expect a left brace");
-	while (peek("v")) {
-	//	p = parsePoint();
-		plist.push_back(new Point(parsePoint()));
-	}
-	match(Token::right_brace, "Expect a right brace");
 	
 	return plist;
 }
 
-int *Parser::parseFaceList(int fn)
+std::vector<int> Parser::parseFace()
 {
-	match(Token::left_brace, "Expect a left brace");
+	std::vector<int> f(3);
+	match(Token::left_bracket, "Expect a left bracket");
+	f[0] = parseInteger();
+	match(Token::comma, "Expect a comma");
+	f[1] = parseInteger();
+	match(Token::comma, "Expect a comma");
+	f[2] = parseInteger();
+	match(Token::right_bracket, "Expect a right bracket");
 	
-	int *flist = new int[3*fn];
-	for (int i = 0; i < fn; i++) {
-		match(Token::left_bracket, "Expect a left bracket");
-		flist[3 * i    ] = parseInteger();
-		match(Token::comma, "Expect a comma");
-		flist[3 * i + 1] = parseInteger();
-		match(Token::comma, "Expect a comma");
-		flist[3 * i + 2] = parseInteger();
-		match(Token::right_bracket, "Expect a right bracket");
+	return f;
+}
+
+std::vector < std::vector<int> > Parser::parseFaceList()
+{
+	std::vector <std::vector<int> > flist;
+
+	match(Token::left_brace, "Expect a left brace");
+
+	while (!peek(Token::right_brace)) {	
+		flist.push_back(parseFace());
 	}
-	match(Token::right_brace, "Expect a right brace");
+		
 	return flist;
 }
 
@@ -607,10 +602,8 @@ Object *Parser::parsePolygonObject()
 	Material *material = default_material;
 	Vector velocity( 0.0, 0.0, 0.0);
 	
-	std::vector<Point*> plist;
-//	int pn = 0;
-	int *flist;
-	int fn = 0;
+	std::vector<Point> plist;
+	std::vector<std::vector<int> > flist;
 	
 	if ( peek( Token::left_brace ) )
     while(true)
@@ -619,18 +612,17 @@ Object *Parser::parsePolygonObject()
         material = parseMaterial();
 			else if ( peek( "velocity" ) )
 				velocity = parseVector();
-			else if ( peek( "point_list" ) ){
+			else if ( peek( "point_list" ) )
 				plist = parsePointList();
-			} else if ( peek( "face_list" ) ) {
-				fn = parseInteger();
-				flist = parseFaceList(fn);
-		  } else if ( peek( Token::right_brace ) )
+			else if ( peek( "face_list" ) )
+				flist = parseFaceList();
+		  else if ( peek( Token::right_brace ) )
         break;
       else
         throwParseException( "Expected `material' or }." );
     }
 	
-	return new Polygon(material, velocity, plist, flist, fn);
+	return new Polygon(material, velocity, plist, flist);
 }
 
 Object *Parser::parseObject()

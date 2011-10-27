@@ -49,7 +49,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		1B09F1E6144FF66C00756DD3 /* otho.scn */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = otho.scn; path = scenes/otho.scn; sourceTree = "<group>"; };
 		1B2883371439256100FA91EA /* Background.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Background.cc; sourceTree = "<group>"; };
 		1B2883381439256100FA91EA /* Background.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Background.h; sourceTree = "<group>"; };
 		1B2883391439256100FA91EA /* BoundingBox.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BoundingBox.cc; sourceTree = "<group>"; };
@@ -104,6 +103,7 @@
 		1B8450051453EC7B00633561 /* Matrix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Matrix.cpp; sourceTree = "<group>"; };
 		1BD85EF8144D66C4003023E1 /* AperatureCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AperatureCamera.h; sourceTree = "<group>"; };
 		1BD85EF9144D66C4003023E1 /* AperatureCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AperatureCamera.cpp; sourceTree = "<group>"; };
+		1BF0C2471458D3880048074A /* cornell_box.scn */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = cornell_box.scn; path = scenes/cornell_box.scn; sourceTree = "<group>"; };
 		8DD76F6C0486A84900D96B5E /* adv_cg_xcode */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = adv_cg_xcode; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6859E8B029090EE04C91782 /* adv_cg_xcode.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = adv_cg_xcode.1; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -248,7 +248,7 @@
 		C6859E8C029090F304C91782 /* Documentation */ = {
 			isa = PBXGroup;
 			children = (
-				1B09F1E6144FF66C00756DD3 /* otho.scn */,
+				1BF0C2471458D3880048074A /* cornell_box.scn */,
 				1B2883601439256100FA91EA /* test.scn */,
 				C6859E8B029090EE04C91782 /* adv_cg_xcode.1 */,
 			);

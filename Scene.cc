@@ -134,7 +134,7 @@ void Scene::render()
             result_dof += result_motion/(double)(DOF_ray);
 
           }
-
+					
           result_sum += result_dof/(double)(SSAA*SSAA);	
 
         }	
